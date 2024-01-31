@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import model.modelo.Credentials;
 import services.LoginServices;
+import services.impl.HibernateServicesImpl;
 import ui.screens.common.BaseScreenController;
 
 public class LoginController extends BaseScreenController {
@@ -14,19 +15,26 @@ public class LoginController extends BaseScreenController {
     public TextField txtUserName;
     private final LoginServices services;
     public AnchorPane pantallaLogin;
+    private final HibernateServicesImpl hibernateServices;
 
     @Inject
-    public LoginController(LoginServices services) {
+    public LoginController(LoginServices services, HibernateServicesImpl hibernateServices) {
 
         this.services = services;
+        this.hibernateServices = hibernateServices;
     }
-    public void doLogin(ActionEvent actionEvent) {
-      Credentials credentials=  services.getByNameAndPassword(txtUserName.getText(), txtPassword.getText());
 
-        if (credentials!= null) {
+    public void doLogin(ActionEvent actionEvent) {
+        Credentials credentials = services.getByNameAndPassword(txtUserName.getText(), txtPassword.getText());
+
+        if (credentials != null) {
             getPrincipalController().onLoginDone(credentials);
             pantallaLogin.setVisible(false);
 
         }
+    }
+
+    public void loadData() {
+        hibernateServices.fromSqlToMongo();
     }
 }

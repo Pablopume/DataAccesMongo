@@ -23,6 +23,7 @@ module javafx {
     requires spring.jdbc;
     requires spring.tx;
     requires jakarta.persistence;
+    requires mongo.java.driver;
     opens model.xml to jakarta.xml.bind;
     exports ui.screens.orders.deleteorders;
     exports services.impl;
@@ -50,6 +51,7 @@ module javafx {
     opens css;
     opens fxml;
     opens configuration;
+    exports model;
     opens ui.screens.orders.addorder;
     opens ui.screens.orders.editorder;
     opens ui.screens.customers.addcustomer;

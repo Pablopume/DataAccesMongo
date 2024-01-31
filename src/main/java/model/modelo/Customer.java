@@ -2,6 +2,7 @@ package model.modelo;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.modelHibernate.CustomersEntity;
@@ -12,23 +13,16 @@ import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
-@Entity
-@Table(name = "customers")
 @NoArgsConstructor
+@Builder
 public class Customer {
-    @Id
-    @Column(name = "id")
+
     private int id;
-    @Column(name = "first_name")
     private String first_name;
-    @Column(name = "last_name")
     private String last_name;
-    @Column(name="email")
     private String email;
-    @Column(name="phone")
     private String phone;
-    @Column(name="date_of_birth")
-    private LocalDate dob;
+    private LocalDate date_of_birth;
     @Transient
     private Credentials credentials;
 
@@ -40,7 +34,7 @@ public class Customer {
         this.last_name = last_name;
         this.email = email;
         this.phone = phone;
-        this.dob = dob;
+        this.date_of_birth = dob;
     }
 
     public Customer(String fileLine) {
@@ -50,17 +44,17 @@ public class Customer {
         this.last_name = elemArray[2];
         this.email = elemArray[3];
         this.phone = elemArray[4];
-        this.dob = LocalDate.parse(elemArray[5]);
+        this.date_of_birth = LocalDate.parse(elemArray[5]);
 
     }
 
     public CustomersEntity toCustomerEntity() {
 
-        return new CustomersEntity(id, first_name, last_name, email, phone, Date.valueOf(dob.toString()));
+        return new CustomersEntity(id, first_name, last_name, email, phone, Date.valueOf(date_of_birth.toString()));
     }
     public String toStringTextFile() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return id + ";" + first_name + ";" + last_name + ";" + email + ";" + phone + ";" + dob.format(formatter);
+        return id + ";" + first_name + ";" + last_name + ";" + email + ";" + phone + ";" + date_of_birth.format(formatter);
     }
 
 

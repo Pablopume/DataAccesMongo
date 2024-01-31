@@ -24,6 +24,15 @@ public class OrdersEntity {
         this.orderItemsByOrderId = orderItemsByOrderId;
     }
 
+    public OrdersEntity(int orderId, Timestamp orderDate, int tableId, Collection<OrderItemsEntity> orderItemsByOrderId, CustomersEntity customersByCustomerId, RestaurantTablesEntity restaurantTablesByTableId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.tableId = tableId;
+        this.orderItemsByOrderId = orderItemsByOrderId;
+        this.customersByCustomerId = customersByCustomerId;
+        this.restaurantTablesByTableId = restaurantTablesByTableId;
+    }
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "order_id", nullable = false)
@@ -32,7 +41,7 @@ public class OrdersEntity {
     @Column(name = "order_date", nullable = false)
     private Timestamp orderDate;
     @Basic
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
     private int customerId;
     @Basic
     @Column(name = "table_id", nullable = false, insertable = false, updatable = false)
@@ -40,7 +49,7 @@ public class OrdersEntity {
     @OneToMany(mappedBy = "ordersByOrderId", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Collection<OrderItemsEntity> orderItemsByOrderId;
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private CustomersEntity customersByCustomerId;
     @ManyToOne
     @JoinColumn(name = "table_id", referencedColumnName = "table_number_id", nullable = false)

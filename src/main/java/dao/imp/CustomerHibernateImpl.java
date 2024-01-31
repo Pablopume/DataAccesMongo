@@ -7,9 +7,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.*;
 import lombok.extern.log4j.Log4j2;
 import model.modelo.Customer;
-import model.modelo.Order;
 import model.errors.CustomerError;
-import model.errors.OrderError;
 import model.modelHibernate.CredentialsEntity;
 import model.modelHibernate.CustomersEntity;
 import model.modelHibernate.OrderItemsEntity;
@@ -39,7 +37,6 @@ public class CustomerHibernateImpl implements CustomerDAO {
             CredentialsEntity credentialsEntity = customer.getCredentials().toCredentialsEntity();
             CustomersEntity customersEntity = customer.toCustomerEntity();
             em.persist(credentialsEntity);
-            customersEntity.setCredentialsById(credentialsEntity);
             customersEntity.setId(credentialsEntity.getId());
             em.persist(customersEntity);
             List<Customer> customersList = getAll().getOrElse(Collections.emptyList());
@@ -110,7 +107,7 @@ public class CustomerHibernateImpl implements CustomerDAO {
                 customersEntity.setLastName(customer.getLast_name());
                 customersEntity.setEmail(customer.getEmail());
                 customersEntity.setPhone(customer.getPhone());
-                customersEntity.setDateOfBirth(Date.valueOf(customer.getDob()));
+                customersEntity.setDateOfBirth(Date.valueOf(customer.getDate_of_birth()));
                 em.merge(customersEntity);
             }
             transaction.commit();

@@ -28,10 +28,10 @@ public class CustomersEntity {
     @Column(name = "email", nullable = false, length = 100)
     private String email;
     @Basic
-    @Column(name = "phone", nullable = true, length = 20)
+    @Column(name = "phone",length = 20)
     private String phone;
     @Basic
-    @Column(name = "date_of_birth", nullable = true)
+    @Column(name = "date_of_birth")
     private Date dateOfBirth;
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)

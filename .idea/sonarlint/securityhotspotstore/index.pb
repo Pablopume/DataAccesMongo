@@ -170,3 +170,21 @@ h
 data/156.xml,0\9\094873d94ce8919a9b2ffd745c8b1857929d7a88
 <
 data/157.xml,5\d\5d05ab6ced2edd1e247f2bb46020a5e4668aee72
+U
+%src/main/java/dao/imp/HibDaoImpl.java,0\f\0f5413cd6a674557eb075c0bf899dce3773a0b3b
+[
++src/main/java/model/modelo/Credentials.java,5\7\571494166b0cdf79a2406f2b41347f9527884015
+X
+(src/main/java/model/modelo/MenuItem.java,b\0\b03f0fa18db01a4beb24a4f3a27044f407bf4b59
+Y
+)src/main/java/model/modelo/OrderItem.java,4\d\4d34af7371b50f8efef1834283899138933f23d9
+S
+#src/main/java/dao/DaoHibernate.java,c\7\c784921948657a20b95509aa1216b9188787267f
+S
+#src/main/java/dao/HibernateDao.java,1\2\129346080655786d7c90784311b8c1fbb96d7e9f
+f
+6src/main/java/services/impl/HibernateServicesImpl.java,3\3\33ba046e1111c04ee4a8ffe0f1b0775ebec70e8f
+Y
+)src/main/java/model/LocalDateAdapter.java,3\b\3b09280e863f958b8a464f0337759ae030859d35
+
+Q.idea/sonarlint/securityhotspotstore/0/f/0f5413cd6a674557eb075c0bf899dce3773a0b3b,5\c\5ceaadac275a0cdd366ad6dd4c34c03717630700

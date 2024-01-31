@@ -24,19 +24,14 @@ public class CredentialsEntity {
     @Basic
     @Column(name = "password", nullable = false, length = 20)
     private String password;
-    @OneToOne(mappedBy = "credentialsById")
-    private CustomersEntity customersById;
+
 
 
     public Credentials toCredentials() {
         return new Credentials(id, userName, password);
     }
 
-    public CredentialsEntity(int id, String userName, String password) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-    }
+
 
     @Override
     public boolean equals(Object o) {

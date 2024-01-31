@@ -49,7 +49,7 @@ public class EditCustomersControllers extends BaseScreenController {
             surnameField.setText(selectedCustomer.getLast_name());
             mailField.setText(selectedCustomer.getEmail());
             phoneField.setText(selectedCustomer.getPhone());
-            dobField.setValue(selectedCustomer.getDob());
+            dobField.setValue(selectedCustomer.getDate_of_birth());
         }
     }
 
