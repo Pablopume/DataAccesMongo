@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orders>
+    <order>
+        <id>213</id>
+        <date>2024-01-23T20:19:06</date>
+        <customer_id>154</customer_id>
+        <table_id>1</table_id>
+        <order_item>
+            <id>365</id>
+            <id_order>213</id_order>
+            <menu_item>Caesar Salad</menu_item>
+            <quantity>2</quantity>
+        </order_item>
+    </order>
+    <order>
+        <id>214</id>
+        <date>2024-01-23T20:19:39</date>
+        <customer_id>154</customer_id>
+        <table_id>2</table_id>
+        <order_item>
+            <id>366</id>
+            <id_order>214</id_order>
+            <menu_item>Margherita Pizza</menu_item>
+            <quantity>2</quantity>
+        </order_item>
+    </order>
+</orders>

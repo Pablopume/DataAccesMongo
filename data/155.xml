@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orders>
+    <order>
+        <id>216</id>
+        <date>2024-01-23T20:28:29</date>
+        <customer_id>155</customer_id>
+        <table_id>3</table_id>
+        <order_item>
+            <id>369</id>
+            <id_order>216</id_order>
+            <menu_item>Margherita Pizza</menu_item>
+            <quantity>4</quantity>
+        </order_item>
+    </order>
+</orders>

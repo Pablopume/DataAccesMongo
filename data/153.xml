@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orders>
+    <order>
+        <id>212</id>
+        <date>2024-01-23T20:12:25</date>
+        <customer_id>153</customer_id>
+        <table_id>3</table_id>
+        <order_item>
+            <id>362</id>
+            <id_order>212</id_order>
+            <menu_item>Grilled Salmon</menu_item>
+            <quantity>2</quantity>
+        </order_item>
+    </order>
+</orders>

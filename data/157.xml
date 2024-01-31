@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<orders>
+    <order>
+        <id>218</id>
+        <date>2024-01-26T12:23:07</date>
+        <customer_id>157</customer_id>
+        <table_id>3</table_id>
+        <order_item>
+            <id>373</id>
+            <id_order>218</id_order>
+            <menu_item>Margherita Pizza</menu_item>
+            <quantity>2</quantity>
+        </order_item>
+        <order_item>
+            <id>374</id>
+            <id_order>218</id_order>
+            <menu_item>New York Cheesecake</menu_item>
+            <quantity>4</quantity>
+        </order_item>
+    </order>
+    <order>
+        <id>219</id>
+        <date>2024-01-26T12:23:14</date>
+        <customer_id>157</customer_id>
+        <table_id>3</table_id>
+        <order_item>
+            <id>375</id>
+            <id_order>219</id_order>
+            <menu_item>Margherita Pizza</menu_item>
+            <quantity>2</quantity>
+        </order_item>
+        <order_item>
+            <id>376</id>
+            <id_order>219</id_order>
+            <menu_item>Caesar Salad</menu_item>
+            <quantity>7</quantity>
+        </order_item>
+    </order>
+</orders>
