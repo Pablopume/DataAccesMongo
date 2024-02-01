@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.modelHibernate.CustomersEntity;
+import org.bson.types.ObjectId;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import java.util.List;
 @Builder
 public class Customer {
 
-    private int id;
+    private ObjectId id;
     private String first_name;
     private String last_name;
     private String email;
@@ -26,10 +27,29 @@ public class Customer {
     private LocalDate date_of_birth;
     @Transient
     private Credentials credentials;
-    private List<Order> orderList;
+    private List<Order> orders;
 
 
-    public Customer(int id, String first_name, String last_name, String email, String phone, LocalDate dob) {
+    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth, Credentials credentials) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone = phone;
+        this.date_of_birth = date_of_birth;
+        this.credentials = credentials;
+
+    }
+
+
+    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone = phone;
+        this.date_of_birth = date_of_birth;
+    }
+
+    public Customer(ObjectId id, String first_name, String last_name, String email, String phone, LocalDate dob) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -38,26 +58,14 @@ public class Customer {
         this.date_of_birth = dob;
     }
 
-    public Customer(String fileLine) {
-        String[] elemArray = fileLine.split(";");
-        this.id = Integer.parseInt(elemArray[0]);
-        this.first_name = elemArray[1];
-        this.last_name = elemArray[2];
-        this.email = elemArray[3];
-        this.phone = elemArray[4];
-        this.date_of_birth = LocalDate.parse(elemArray[5]);
 
+    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth, Credentials credentials, List<Order> orders) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone = phone;
+        this.date_of_birth = date_of_birth;
+        this.credentials = credentials;
+        this.orders = orders;
     }
-
-    public CustomersEntity toCustomerEntity() {
-
-        return new CustomersEntity(id, first_name, last_name, email, phone, Date.valueOf(date_of_birth.toString()));
-    }
-
-    public String toStringTextFile() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        return id + ";" + first_name + ";" + last_name + ";" + email + ";" + phone + ";" + date_of_birth.format(formatter);
-    }
-
-
 }

@@ -28,7 +28,7 @@ public class CredentialsEntity {
 
 
     public Credentials toCredentials() {
-        return new Credentials(id, userName, password);
+        return new Credentials( userName, password);
     }
 
 

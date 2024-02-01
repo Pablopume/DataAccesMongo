@@ -10,9 +10,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.modelo.Credentials;
 import model.modelo.Order;
 import model.modelo.OrderItem;
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class EditOrderController extends BaseScreenController {
     @FXML
@@ -85,7 +87,7 @@ public class EditOrderController extends BaseScreenController {
         credentials = getPrincipalController().getActualUser();
 
 
-        if(getPrincipalController().getActualUser().getId()!=-1) {
+        if(!Objects.equals(getPrincipalController().getActualUser().getId(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
             if(!editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()).isEmpty()){
                 orderTable.getItems().setAll(editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()));
             }
@@ -118,7 +120,7 @@ public class EditOrderController extends BaseScreenController {
 
         Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
         ObservableList<OrderItem> orderItem= ordersXMLTable.getItems();
-        orderItem.add(new OrderItem(0,selectedOrder.getId(),Integer.parseInt(quantityItems.getText()),editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
+        orderItem.add(new OrderItem(null,selectedOrder.getId(),Integer.parseInt(quantityItems.getText()),editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
         ordersXMLTable.setItems(orderItem);
     }
 

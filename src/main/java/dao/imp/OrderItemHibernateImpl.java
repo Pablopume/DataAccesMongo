@@ -9,6 +9,7 @@ import jakarta.persistence.TypedQuery;
 import model.modelo.OrderItem;
 import model.errors.OrderError;
 import model.modelHibernate.OrderItemsEntity;
+import org.bson.types.ObjectId;
 
 
 import java.util.List;
@@ -49,7 +50,7 @@ private EntityManager em;
     }
 
     @Override
-    public Either<OrderError, List<OrderItem>> get(int id) {
+    public Either<OrderError, List<OrderItem>> get(ObjectId id) {
         Either<OrderError, List<OrderItem>> result;
 
 

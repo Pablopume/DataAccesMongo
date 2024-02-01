@@ -10,6 +10,7 @@ import model.modelo.Credentials;
 import model.modelo.Order;
 import model.modelo.OrderItem;
 
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDateTime;
@@ -50,24 +51,24 @@ public class AddOrderController extends BaseScreenController {
     }
 
 
-    public void addOrder() {
+//    public void addOrder() {
+//
+//        ObjectId selectedCustomerId = actualuser.getId();
+//        int selectedTableId = Integer.parseInt(table_id.getValue());
+//         addOrderViewModel.getServices().createOrder(new Order(LocalDateTime.now(), selectedCustomerId, selectedTableId,ordersXMLTable.getItems())).get();
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle(Constants.ORDER_ADDED);
+//        alert.setHeaderText(null);
+//        alert.setContentText(Constants.THE_ORDER_HAS_BEEN_ADDED);
+//        alert.showAndWait();
+//
+//    }
 
-        int selectedCustomerId = actualuser.getId();
-        int selectedTableId = Integer.parseInt(table_id.getValue());
-         addOrderViewModel.getServices().createOrder(new Order(LocalDateTime.now(), selectedCustomerId, selectedTableId,ordersXMLTable.getItems())).get();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(Constants.ORDER_ADDED);
-        alert.setHeaderText(null);
-        alert.setContentText(Constants.THE_ORDER_HAS_BEEN_ADDED);
-        alert.showAndWait();
-
-    }
-
-    public void addItem() {
-        ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
-        orderItem.add(new OrderItem(addOrderViewModel.getOrderItemService().getAutoId(), addOrderViewModel.getServices().getLastId() + 1, Integer.parseInt(quantityItems.getText()), addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
-        ordersXMLTable.setItems(orderItem);
-    }
+//    public void addItem() {
+//        ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
+//        orderItem.add(new OrderItem(addOrderViewModel.getOrderItemService().getAutoId(), addOrderViewModel.getServices().getLastId() + 1, Integer.parseInt(quantityItems.getText()), addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
+//        ordersXMLTable.setItems(orderItem);
+//    }
 
     public void removeOrder() {
 

@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.modelo.Order;
 import model.modelo.OrderItem;
+import org.bson.types.ObjectId;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class OrdersEntity {
         for (OrderItemsEntity orderItemsEntity : orderItemsByOrderId) {
             orderItems.add(orderItemsEntity.toOrderItem());
         }
-        return new Order(orderId, orderDate.toLocalDateTime(), customersByCustomerId.getId(), restaurantTablesByTableId.getTableNumberId(), orderItems);
+        return new Order( orderDate.toLocalDateTime(), restaurantTablesByTableId.getTableNumberId(), orderItems);
     }
 
 

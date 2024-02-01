@@ -5,10 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.modelo.Customer;
+import model.modelo.Order;
+import org.bson.types.ObjectId;
 
 import java.sql.Date;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 @Data
 @Entity
 @AllArgsConstructor
@@ -36,6 +41,7 @@ public class CustomersEntity {
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "id", referencedColumnName = "id", nullable = false)
     private CredentialsEntity credentialsById;
+
     @OneToMany(mappedBy = "customersByCustomerId")
     private Collection<OrdersEntity> ordersById;
 
@@ -49,7 +55,8 @@ public class CustomersEntity {
     }
 
     public Customer toCustomer() {
-        return new Customer(id, firstName, lastName, email, phone, dateOfBirth.toLocalDate());
+
+        return new Customer( firstName, lastName, email, phone, dateOfBirth.toLocalDate(), credentialsById.toCredentials(), ordersById.stream().map(OrdersEntity::toOrder).collect(Collectors.toList()));
     }
 
 

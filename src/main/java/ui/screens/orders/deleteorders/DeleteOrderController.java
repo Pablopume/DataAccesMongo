@@ -10,16 +10,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.modelo.Order;
 import model.modelo.OrderItem;
 
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 public class DeleteOrderController extends BaseScreenController {
     @FXML
     public TableView<Order> ordersTable;
     @FXML
-    public TableColumn<Order, Integer> idOrder;
+    public TableColumn<Order, ObjectId> idOrder;
     @FXML
     public TableColumn<Order, LocalDateTime> orderDate;
 
@@ -67,7 +69,7 @@ public class DeleteOrderController extends BaseScreenController {
     @Override
     public void principalLoaded() {
         deleteOrderViewModel.loadState();
-        if(getPrincipalController().getActualUser().getId()!=-1) {
+        if(!Objects.equals(getPrincipalController().getActualUser().getId(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
             ordersTable.getItems().setAll(deleteOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()));
         }
     }

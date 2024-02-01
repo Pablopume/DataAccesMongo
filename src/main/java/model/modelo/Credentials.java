@@ -1,17 +1,22 @@
 package model.modelo;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import model.modelHibernate.CredentialsEntity;
+import org.bson.types.ObjectId;
 
 @AllArgsConstructor
 @Data
+@Builder
 public class Credentials {
-    private  int id;
+    private ObjectId id;
     private final String user;
     private final String password;
-public CredentialsEntity toCredentialsEntity() {
-    return new CredentialsEntity(id, user, password);
-}
 
+
+    public Credentials(String user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 }

@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.modelo.Credentials;
 import model.modelo.Customer;
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDate;
@@ -50,7 +51,7 @@ public class AddCustomersController extends BaseScreenController {
         surnameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.LAST_NAME));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.EMAIL));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.PHONE));
-        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.DOB));
+        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>("date_of_birth"));
         addCustomerViewModel.getState().addListener((observableValue, oldValue, newValue) -> {
                     if (newValue.getError() != null) {
                         getPrincipalController().sacarAlertError(newValue.getError());
@@ -78,7 +79,7 @@ public class AddCustomersController extends BaseScreenController {
 
         } else {
 
-            if (addCustomerViewModel.getServices().add(new Customer(0,nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(),new Credentials(0,userName.getText(),password.getText()), Collections.emptyList())).isRight()){
+            if (addCustomerViewModel.getServices().add(new Customer(nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(),new Credentials(userName.getText(),password.getText()), Collections.emptyList())).isRight()){
 
                 alert.setTitle("Customer added");
                 alert.setHeaderText(null);

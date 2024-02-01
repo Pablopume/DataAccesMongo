@@ -7,6 +7,7 @@ import jakarta.inject.Inject;
 import model.modelo.MenuItem;
 import model.modelo.OrderItem;
 import model.errors.OrderError;
+import org.bson.types.ObjectId;
 import services.OrderItemService;
 
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 
     @Override
-    public double getTotalPrice(int id) {
+    public double getTotalPrice(ObjectId id) {
         List<OrderItem> orderItems = getOrdersById(id);
         double totalPrice = 0;
         double price = 0;
@@ -47,7 +48,7 @@ public class OrderItemServiceImpl implements OrderItemService {
         return Math.round(totalPrice * 100.0) / 100.0;
     }
 
-    public List<OrderItem> getOrdersById(int id) {
+    public List<OrderItem> getOrdersById(ObjectId id) {
         return dao.get(id).getOrElse(Collections.emptyList());
 
     }

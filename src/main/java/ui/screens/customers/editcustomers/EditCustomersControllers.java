@@ -43,7 +43,7 @@ public class EditCustomersControllers extends BaseScreenController {
     private EditCustomerViewModel editCustomerViewModel;
 
     public void handleCustomerSelection() {
-        Customer selectedCustomer = (Customer) customersTable.getSelectionModel().getSelectedItem();
+        Customer selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         if (selectedCustomer != null) {
             nameField.setText(selectedCustomer.getFirst_name());
             surnameField.setText(selectedCustomer.getLast_name());
@@ -60,7 +60,7 @@ public class EditCustomersControllers extends BaseScreenController {
         surnameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.LAST_NAME));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.EMAIL));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.PHONE));
-        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.DOB));
+        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>("date_of_birth"));
         customersTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleCustomerSelection();
         });

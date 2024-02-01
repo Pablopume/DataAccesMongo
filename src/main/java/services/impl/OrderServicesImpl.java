@@ -6,6 +6,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import model.modelo.Order;
 import model.errors.OrderError;
+import org.bson.types.ObjectId;
 import services.OrderServices;
 
 import java.time.LocalDate;
@@ -32,7 +33,7 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     public Either<OrderError, Order> createOrder(Order order) {
-        return ordersDAO.save(order);
+        return ordersDAO.add(order);
     }
 
     @Override
@@ -50,7 +51,7 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     @Override
-    public List<Order> getOrdersByCustomerId(int id) {
+    public List<Order> getOrdersByCustomerId(ObjectId id) {
         Either<OrderError, List<Order>> result = ordersDAO.getAll();
 
         if (result.isLeft()) {
@@ -64,20 +65,6 @@ public class OrderServicesImpl implements OrderServices {
     }
 
 
-    public int getLastId() {
-        int number = 0;
-        Either<OrderError, List<Order>> result = ordersDAO.getAll();
-        if (result.isLeft()) {
-            number = 0;
-        } else {
-            List<Order> allOrders = result.get();
-            number = allOrders.stream()
-                    .map(Order::getId)
-                    .max(Comparator.comparing(Integer::valueOf))
-                    .orElse(0);
-        }
-        return number;
-    }
 
 
     @Override

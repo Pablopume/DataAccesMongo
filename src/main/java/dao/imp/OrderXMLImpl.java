@@ -13,6 +13,7 @@ import model.errors.OrderError;
 import model.xml.OrderItemXML;
 import model.xml.OrderXML;
 import model.xml.OrdersXML;
+import org.bson.types.ObjectId;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -28,7 +29,7 @@ public class OrderXMLImpl implements OrdersDAO {
     }
 
     @Override
-    public Either<OrderError, List<Order>> getAll(int id) {
+    public Either<OrderError, List<Order>> getAll(ObjectId id) {
         return null;
     }
 
@@ -38,7 +39,7 @@ public class OrderXMLImpl implements OrdersDAO {
     }
 
     @Override
-    public Either<OrderError, Order> save(Order order) {
+    public Either<OrderError, Order> add(Order order) {
         return null;
     }
 

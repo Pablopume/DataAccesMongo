@@ -43,19 +43,20 @@ public class CustomerServicesImpl implements CustomerServices {
         return customerDAO.delete(customer, deleteOrders);
     }
 
-    @Override
-    public Either<OrderError, Order> save(Order order) {
-        return ordersDAO.save(order);
-    }
+//    @Override
+//    public Either<OrderError, Order> save(Order order) {
+//        return ordersDAO.add(order);
+//    }
     public String getNameById(int id) {
-        List<Customer> customers = customerDAO.getAll().get();
-        String name = "";
-        for (Customer customer : customers) {
-            if (customer.getId() == id) {
-                name = customer.getFirst_name();
-            }
-        }
-        return name;
+//        List<Customer> customers = customerDAO.getAll().get();
+//        String name = "";
+//        for (Customer customer : customers) {
+//            if (customer.getId() == id) {
+//                name = customer.getFirst_name();
+//            }
+//        }
+//        return name;
+        return null;
     }
 
 }

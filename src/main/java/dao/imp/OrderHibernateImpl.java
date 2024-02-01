@@ -15,6 +15,8 @@ import model.modelo.OrderItem;
 import model.errors.OrderError;
 import model.modelHibernate.OrdersEntity;
 import model.modelHibernate.RestaurantTablesEntity;
+import org.bson.types.ObjectId;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class OrderHibernateImpl implements OrdersDAO {
         this.jpautil = jpautil;
 
     }
+
     @Override
     public Either<OrderError, List<Order>> getAll() {
         Either<OrderError, List<Order>> result;
@@ -46,7 +49,7 @@ public class OrderHibernateImpl implements OrdersDAO {
                     .toList();
 
             if (ordersList.isEmpty()) {
-                result = Either.left(new OrderError( "Error while retrieving orders"));
+                result = Either.left(new OrderError("Error while retrieving orders"));
             } else {
                 result = Either.right(ordersList);
             }
@@ -59,7 +62,7 @@ public class OrderHibernateImpl implements OrdersDAO {
 
 
     @Override
-    public Either<OrderError, List<Order>> getAll(int id) {
+    public Either<OrderError, List<Order>> getAll(ObjectId id) {
         return null;
     }
 
@@ -93,61 +96,16 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     @Override
     public Either<OrderError, Integer> update(Order order) {
-        Either<OrderError, Integer> result;
-        em= jpautil.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
+        return null;
 
-        try {
-            tx.begin();
 
-            OrdersEntity existingOrder = em.find(OrdersEntity.class, order.getId());
-            existingOrder.getOrderItemsByOrderId().forEach(orderItemsEntity -> em.createQuery("delete from OrderItemsEntity where orderId = :orderId")
-                    .setParameter("orderId", order.getId())
-                    .executeUpdate());
-            existingOrder.setOrderDate(Timestamp.valueOf(order.getDate()));
-            existingOrder.setOrderItemsByOrderId(new ArrayList<>(order.getOrderItemList().stream().map(OrderItem::toOrderItemsEntity).toList()));
-            existingOrder.getOrderItemsByOrderId().forEach(orderItemsEntity -> orderItemsEntity.setOrdersByOrderId(existingOrder));
-            existingOrder.getOrderItemsByOrderId().forEach(em::persist);
-            existingOrder.setRestaurantTablesByTableId(em.find(RestaurantTablesEntity.class, order.getTable_id()));
-            em.merge(existingOrder);
-            tx.commit();
-            result = Either.right(0);
-        } catch (PersistenceException e) {
-            log.error(e.getMessage());
-            tx.rollback();
-            result = Either.left(new OrderError(Constants.ERROR_UPDATING_ORDER));
-        } finally {
-            em.close();
-        }
-
-        return result;
     }
 
 
-
     @Override
-    public Either<OrderError, Order> save(Order order) {
+    public Either<OrderError, Order> add(Order order) {
 
-        Either<OrderError, Order> result;
-        em = jpautil.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        try {
-            tx.begin();
-            OrdersEntity order2 = order.toOrdersEntity();
-            order2.setOrderItemsByOrderId(order.getOrderItemList().stream().map(OrderItem::toOrderItemsEntity).toList());
-            order2.getOrderItemsByOrderId().forEach(orderItemsEntity -> orderItemsEntity.setOrdersByOrderId(order2));
-            em.persist(order2);
-            tx.commit();
-            result = Either.right(order);
-        } catch (PersistenceException e) {
-            log.error(e.getMessage());
-            em.getTransaction().rollback();
-            result = Either.left(new OrderError(Constants.ERROR_SAVING_ORDERS));
-        } finally {
-            em.close();
-        }
-
-        return result;
+        return null;
     }
 
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.modelo.OrderItem;
+import org.bson.types.ObjectId;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -39,7 +41,7 @@ public class OrderItemsEntity {
     private MenuItemsEntity menuItemsByMenuItemId;
 
     public OrderItem toOrderItem() {
-        return new OrderItem(orderItemId,orderId, menuItemsByMenuItemId.toMenuItem().getId(), quantity);
+        return new OrderItem( menuItemsByMenuItemId.toMenuItem().getId(), quantity);
     }
 
 }

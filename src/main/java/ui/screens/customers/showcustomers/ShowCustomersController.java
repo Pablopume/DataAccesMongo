@@ -39,7 +39,7 @@ public class ShowCustomersController extends BaseScreenController {
         surnameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.LAST_NAME));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.EMAIL));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.PHONE));
-        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.DOB));
+        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>("date_of_birth"));
         custViewModel.getState().addListener((observableValue, oldValue, newValue) -> {
 
                     if (newValue.getError() != null) {

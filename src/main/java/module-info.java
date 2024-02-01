@@ -41,6 +41,7 @@ module javafx {
     exports ui.screens.orders.addorder;
     exports configuration;
     exports common;
+    exports model.converters;
     opens model.modelHibernate;
     opens ui.screens.common;
     opens ui.screens.login;

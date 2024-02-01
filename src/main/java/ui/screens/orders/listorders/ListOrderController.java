@@ -10,10 +10,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.modelo.MenuItem;
 import model.modelo.Order;
 import model.modelo.OrderItem;
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 import ui.screens.principal.PrincipalController;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 public class ListOrderController extends BaseScreenController {
@@ -70,7 +72,7 @@ public class ListOrderController extends BaseScreenController {
                         customersTable.getItems().setAll(listOrderViewModel.getServices().getAll().get());
                     } else {
                         customersTable.getItems().clear();
-                        customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(Integer.parseInt(customerTextField.getText())));
+                     //   customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(Integer.parseInt(customerTextField.getText())));
                     }
                 }
         );
@@ -108,7 +110,7 @@ public class ListOrderController extends BaseScreenController {
                 return new SimpleDoubleProperty(menuItem.getPrice()*orderItem.getQuantity()).asObject();
             });
 
-            nameCustomer.setText(listOrderViewModel.getServicesCustomer().getNameById(selectedOrder.getCustomer_id()));
+         //   nameCustomer.setText(listOrderViewModel.getServicesCustomer().getNameById(selectedOrder.getCustomer_id()));
 
         });
         listOrderViewModel.voidState();
@@ -131,7 +133,7 @@ public class ListOrderController extends BaseScreenController {
     @Override
     public void principalLoaded() {
         listOrderViewModel.loadState();
-        if(getPrincipalController().getActualUser().getId()!=-1) {
+        if(!Objects.equals(getPrincipalController().getActualUser().getId(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
             if(!listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()).isEmpty()){
                 customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()));
             }

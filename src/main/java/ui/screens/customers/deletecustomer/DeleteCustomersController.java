@@ -51,7 +51,7 @@ public class DeleteCustomersController extends BaseScreenController {
         surnameCustomerColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.LAST_NAME2));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.EMAIL2));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.PHONE2));
-        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>(Constants.DOB2));
+        dateOfBirthdayColumn.setCellValueFactory(new PropertyValueFactory<>("date_of_birth"));
         idOrder.setCellValueFactory(new PropertyValueFactory<>(Constants.ID));
         orderDate.setCellValueFactory(new PropertyValueFactory<>(Constants.DATE));
         customerId.setCellValueFactory(new PropertyValueFactory<>(Constants.CUSTOMER_ID));
@@ -74,7 +74,7 @@ public class DeleteCustomersController extends BaseScreenController {
             Customer selectedCustomer = selectionModel.getSelectedItem();
             if (selectedCustomer != null) {
                 orderssTable.getItems().clear();
-                orderssTable.getItems().addAll(deleteCustomerViewModel.getServicesOrder().getOrdersByCustomerId(selectedCustomer.getId()));
+                orderssTable.getItems().addAll(selectedCustomer.getOrders());
             }
         });
         deleteCustomerViewModel.voidState();
@@ -86,7 +86,7 @@ public class DeleteCustomersController extends BaseScreenController {
         deleteCustomerViewModel.loadState();
     }
 
-    public void deleteCustomer(ActionEvent actionEvent) {
+    public void deleteCustomer() {
         SelectionModel<Customer> selectionModel = customersTable.getSelectionModel();
         Customer selectedCustomer = selectionModel.getSelectedItem();
 
@@ -122,35 +122,33 @@ public class DeleteCustomersController extends BaseScreenController {
                                     Optional<ButtonType> res2 = alert2.showAndWait();
                                     res2.ifPresent(buttonType2 -> {
                                         if (buttonType2.equals(ButtonType.YES)) {
-                                            deleteCustomerViewModel.getServicesOrder().getOrdersByCustomerId(selectedCustomer.getId()).forEach(order -> {
-                                                List<OrderItem> orderItems = deleteCustomerViewModel.getOrderItemService().getOrdersById(order.getId());
-                                                order.setOrderItemList(orderItems);
-                                                deleteCustomerViewModel.getServices().save(order);
-                                            });
-
-                                            deleteCustomerViewModel.getServices().delete(selectedCustomer, true).peek(result -> {
-                                                        if (result == 0) {
-                                                            Alert a = new Alert(Alert.AlertType.INFORMATION);
-                                                            a.setTitle("Customer deleted");
-                                                            a.setHeaderText(null);
-                                                            a.setContentText("The customer has been deleted");
-                                                            a.show();
-                                                            orderssTable.getItems().clear();
-                                                            customersTable.getItems().remove(selectedCustomer);
-                                                        }
-                                                    })
-                                                    .peekLeft(customerError2 -> getPrincipalController().sacarAlertError(customerError2.getMessage()));
+                                            deleteCustomerViewModel.getServices().delete(selectedCustomer, true);
                                         }
                                     });
-                                } else {
-                                    getPrincipalController().sacarAlertError(customerError.getMessage());
+
+                                    deleteCustomerViewModel.getServices().delete(selectedCustomer, true).peek(result -> {
+                                                if (result == 0) {
+                                                    Alert a = new Alert(Alert.AlertType.INFORMATION);
+                                                    a.setTitle("Customer deleted");
+                                                    a.setHeaderText(null);
+                                                    a.setContentText("The customer has been deleted");
+                                                    a.show();
+                                                    orderssTable.getItems().clear();
+                                                    customersTable.getItems().remove(selectedCustomer);
+                                                }
+                                            })
+                                            .peekLeft(customerError2 -> getPrincipalController().sacarAlertError(customerError2.getMessage()));
                                 }
                             });
+                } else {
+                    getPrincipalController().sacarAlertError("Error deleting customer");
                 }
             });
         }
     }
 }
+
+
 
 
 

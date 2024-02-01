@@ -15,6 +15,7 @@ import javafx.stage.WindowEvent;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import model.modelo.Credentials;
+import org.bson.types.ObjectId;
 import ui.screens.common.BaseScreenController;
 import ui.screens.common.Screens;
 
@@ -176,7 +177,7 @@ public class PrincipalController {
     public void onLoginDone(Credentials usuario) {
         actualUser = usuario;
         menuPrincipal.setVisible(true);
-        if(usuario.getId()==-1){
+        if(usuario.getId()==new ObjectId("65bbf7ab4501431b5af7f5fe")){
             addOrders.setVisible(false);
             menuCustomers.setVisible(true);
             deleteOrders.setVisible(true);
