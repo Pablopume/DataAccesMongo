@@ -34,4 +34,10 @@ public class MenuItemServiceImpl implements MenuItemService {
         return menuItem2;
     }
 
+    @Override
+    public Either<OrderError, MenuItem> get(int id) {
+        return dao.get(id);
+    }
+
+
 }

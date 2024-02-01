@@ -65,7 +65,7 @@ public class AddOrderController extends BaseScreenController {
 
     public void addItem() {
         ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
-        orderItem.add(new OrderItem(addOrderViewModel.getOrderItemService().getAutoId(), addOrderViewModel.getServices().getLastId() + 1, addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()), Integer.parseInt(quantityItems.getText())));
+        orderItem.add(new OrderItem(addOrderViewModel.getOrderItemService().getAutoId(), addOrderViewModel.getServices().getLastId() + 1, Integer.parseInt(quantityItems.getText()), addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
         ordersXMLTable.setItems(orderItem);
     }
 

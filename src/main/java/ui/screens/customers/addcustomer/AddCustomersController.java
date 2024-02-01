@@ -11,6 +11,7 @@ import model.modelo.Customer;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDate;
+import java.util.Collections;
 
 public class AddCustomersController extends BaseScreenController {
     @FXML
@@ -77,7 +78,7 @@ public class AddCustomersController extends BaseScreenController {
 
         } else {
 
-            if (addCustomerViewModel.getServices().add(new Customer(0,nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(),new Credentials(0,userName.getText(),password.getText()))).isRight()){
+            if (addCustomerViewModel.getServices().add(new Customer(0,nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(),new Credentials(0,userName.getText(),password.getText()), Collections.emptyList())).isRight()){
 
                 alert.setTitle("Customer added");
                 alert.setHeaderText(null);

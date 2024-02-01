@@ -11,16 +11,15 @@ import model.modelHibernate.OrderItemsEntity;
 public class OrderItem {
     private int id;
     private int idOrder;
-    private MenuItem menuItem;
     private int quantity;
+    private int menuItemId;
 
+    public OrderItem(int quantity) {
 
-    public OrderItem(MenuItem menuItem, int quantity) {
-        this.menuItem = menuItem;
         this.quantity = quantity;
     }
 
     public OrderItemsEntity toOrderItemsEntity() {
-        return new OrderItemsEntity(menuItem.getId(), quantity);
+        return new OrderItemsEntity(menuItemId, quantity);
     }
 }

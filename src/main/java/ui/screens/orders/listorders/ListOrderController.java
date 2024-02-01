@@ -3,6 +3,7 @@ package ui.screens.orders.listorders;
 import common.Constants;
 import jakarta.inject.Inject;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -59,7 +60,7 @@ public class ListOrderController extends BaseScreenController {
         orderDate.setCellValueFactory(new PropertyValueFactory<>(Constants.DATE));
         customerId.setCellValueFactory(new PropertyValueFactory<>(Constants.CUSTOMER_ID));
         tableId.setCellValueFactory(new PropertyValueFactory<>(Constants.TABLE_ID));
-        menuItem.setCellValueFactory(new PropertyValueFactory<>("menuItem"));
+        menuItem.setCellValueFactory(cellData ->new SimpleStringProperty(listOrderViewModel.getMenuItemService().get(cellData.getValue().getMenuItemId()).get().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         filterOptions();
@@ -102,7 +103,8 @@ public class ListOrderController extends BaseScreenController {
 
             priceT.setCellValueFactory(cellData -> {
                 OrderItem orderItem = cellData.getValue();
-                MenuItem menuItem = orderItem.getMenuItem();
+
+                MenuItem menuItem = listOrderViewModel.getMenuItemService().get(orderItem.getMenuItemId()).get();
                 return new SimpleDoubleProperty(menuItem.getPrice()*orderItem.getQuantity()).asObject();
             });
 

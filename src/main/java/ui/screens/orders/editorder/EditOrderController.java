@@ -118,11 +118,11 @@ public class EditOrderController extends BaseScreenController {
 
         Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
         ObservableList<OrderItem> orderItem= ordersXMLTable.getItems();
-        orderItem.add(new OrderItem(0,selectedOrder.getId(),editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()),Integer.parseInt(quantityItems.getText())));
+        orderItem.add(new OrderItem(0,selectedOrder.getId(),Integer.parseInt(quantityItems.getText()),editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
         ordersXMLTable.setItems(orderItem);
     }
 
-    public void deleteOrder(ActionEvent actionEvent) {
+    public void deleteOrder() {
         ObservableList<OrderItem> orderItemXMLS= ordersXMLTable.getItems();
         OrderItem selectedOrder = ordersXMLTable.getSelectionModel().getSelectedItem();
         orderItemXMLS.remove(selectedOrder);

@@ -10,6 +10,7 @@ import model.modelHibernate.CustomersEntity;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,7 +26,7 @@ public class Customer {
     private LocalDate date_of_birth;
     @Transient
     private Credentials credentials;
-
+    private List<Order> orderList;
 
 
     public Customer(int id, String first_name, String last_name, String email, String phone, LocalDate dob) {
@@ -52,6 +53,7 @@ public class Customer {
 
         return new CustomersEntity(id, first_name, last_name, email, phone, Date.valueOf(date_of_birth.toString()));
     }
+
     public String toStringTextFile() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return id + ";" + first_name + ";" + last_name + ";" + email + ";" + phone + ";" + date_of_birth.format(formatter);

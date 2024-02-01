@@ -39,7 +39,7 @@ public class OrderItemsEntity {
     private MenuItemsEntity menuItemsByMenuItemId;
 
     public OrderItem toOrderItem() {
-        return new OrderItem(orderItemId,orderId, menuItemsByMenuItemId.toMenuItem(), quantity);
+        return new OrderItem(orderItemId,orderId, menuItemsByMenuItemId.toMenuItem().getId(), quantity);
     }
 
 }

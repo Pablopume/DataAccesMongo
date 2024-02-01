@@ -9,5 +9,5 @@ import java.util.List;
 public interface MenuItemService {
     Either<OrderError, List<MenuItem>> getAll();
     MenuItem getByName(String name);
-
+    Either<OrderError, MenuItem>get(int id);
 }

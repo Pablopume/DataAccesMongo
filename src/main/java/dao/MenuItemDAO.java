@@ -9,4 +9,5 @@ import java.util.List;
 public interface MenuItemDAO {
 
     Either<OrderError, List<MenuItem>> getAll();
+    Either<OrderError, MenuItem>get(int id);
 }

@@ -49,6 +49,20 @@ public class MenuItemHibernateImpl implements MenuItemDAO {
         return result;
     }
 
-
+    public Either<OrderError, MenuItem>get(int id){
+        Either<OrderError, MenuItem> result;
+        try {
+            em = jpautil.getEntityManager();
+            MenuItemsEntity menuItemsEntity = em.find(MenuItemsEntity.class, id);
+            if (menuItemsEntity == null) {
+                result = Either.left(new OrderError("There is no menu item with id " + id));
+            } else {
+                result = Either.right(menuItemsEntity.toMenuItem());
+            }
+        } finally {
+            if (em != null) em.close();
+        }
+        return result;
+    }
 
 }

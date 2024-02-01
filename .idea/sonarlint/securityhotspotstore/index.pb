@@ -179,8 +179,6 @@ X
 Y
 )src/main/java/model/modelo/OrderItem.java,4\d\4d34af7371b50f8efef1834283899138933f23d9
 S
-#src/main/java/dao/DaoHibernate.java,c\7\c784921948657a20b95509aa1216b9188787267f
-S
 #src/main/java/dao/HibernateDao.java,1\2\129346080655786d7c90784311b8c1fbb96d7e9f
 f
 6src/main/java/services/impl/HibernateServicesImpl.java,3\3\33ba046e1111c04ee4a8ffe0f1b0775ebec70e8f
