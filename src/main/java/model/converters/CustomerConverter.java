@@ -1,19 +1,27 @@
 package model.converters;
 
+import jakarta.inject.Inject;
 import model.modelo.Customer;
 import model.modelo.Order;
 import model.modelo.OrderItem;
 import org.bson.Document;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class CustomerConverter {
-    public  Customer fromDocument(Document document) {
+    private final OrderConverter orderConverter;
+    private final OrderItemConverter orderItemConverter;
+
+    @Inject
+    public CustomerConverter(OrderConverter orderConverter, OrderItemConverter orderItemConverter) {
+        this.orderConverter = orderConverter;
+        this.orderItemConverter = orderItemConverter;
+    }
+
+    public Customer fromDocument(Document document) {
         Customer customer = new Customer();
         customer.setId(document.getObjectId("_id"));
         customer.setFirst_name(document.getString("first_name"));
@@ -21,24 +29,18 @@ public class CustomerConverter {
         customer.setEmail(document.getString("email"));
         customer.setPhone(document.getString("phone"));
         customer.setDate_of_birth(LocalDate.parse(document.getString("date_of_birth")));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
         List<Document> ordersDocuments = (List<Document>) document.get("orders");
         if (ordersDocuments != null) {
             List<Order> orders = new ArrayList<>();
             for (Document orderDocument : ordersDocuments) {
-                Order order = new Order();
-                order.setDate(LocalDateTime.parse(orderDocument.getString("date"), formatter));
-                order.setTable_id(orderDocument.getInteger("table_id"));
-
+                Order order = orderConverter.fromDocument(orderDocument);
                 List<Document> orderItemsDocuments = (List<Document>) orderDocument.get("orderItemList");
                 if (orderItemsDocuments != null) {
                     List<OrderItem> orderItems = new ArrayList<>();
                     for (Document orderItemDocument : orderItemsDocuments) {
-                        OrderItem orderItem = new OrderItem();
-                        orderItem.setQuantity(orderItemDocument.getInteger("quantity"));
-                        orderItem.setMenuItemId(orderItemDocument.getInteger("menuItemId"));
+                        OrderItem orderItem = orderItemConverter.fromDocument(orderItemDocument);
                         orderItems.add(orderItem);
                     }
                     order.setOrderItemList(orderItems);

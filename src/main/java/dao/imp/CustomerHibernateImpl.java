@@ -1,5 +1,7 @@
 package dao.imp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -10,16 +12,24 @@ import dao.JPAUtil;
 import jakarta.inject.Inject;
 import jakarta.persistence.*;
 import lombok.extern.log4j.Log4j2;
+import model.LocalDateAdapter;
+import model.LocalDateTimeAdapter;
+import model.ObjectIdAdapter;
 import model.converters.CustomerConverter;
+import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.errors.CustomerError;
 import model.modelHibernate.CustomersEntity;
 import model.modelHibernate.OrderItemsEntity;
 import model.modelHibernate.OrdersEntity;
 import io.vavr.control.Either;
+import model.modelo.Order;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,50 +38,76 @@ import java.util.stream.Collectors;
 @Log4j2
 public class CustomerHibernateImpl implements CustomerDAO {
     private final CustomerConverter customerConverter;
-    private final JPAUtil jpautil;
-    private EntityManager em;
 
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .registerTypeAdapter(ObjectId.class, new ObjectIdAdapter())
+            .create();
     @Inject
-    public CustomerHibernateImpl(CustomerConverter customerConverter, JPAUtil jpautil) {
+    public CustomerHibernateImpl(CustomerConverter customerConverter) {
         this.customerConverter = customerConverter;
-        this.jpautil = jpautil;
+
     }
 
-    @Override
-    public Either<CustomerError, List<Customer>> add(Customer customer) {
-        return null;
-    }
+//    @Override
+   public Either<CustomerError, List<Customer>> add(Customer c) {
+
+
+           Either<CustomerError, List<Customer>> result;
+           try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+               MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+               MongoCollection<Document> customers = db.getCollection("customers");
+               MongoCollection<Document> credentials = db.getCollection("credentials");
+
+               // Convert Customer to Document using Gson
+               Document customerDocument = Document.parse(gson.toJson(c));
+                customerDocument.remove("credentials");
+               // Insert the document into the collection
+               customers.insertOne(customerDocument);
+
+               ObjectId customerId = (ObjectId) customerDocument.get("_id");
+
+               // Establecer la id generada en la entidad Credential
+               c.getCredentials().set_id(customerId);
+
+               // Convert Credential to Document using Gson
+               Document credentialDocument = Document.parse(gson.toJson(c.getCredentials()));
+
+               // Insertar el documento del Credential en la colección
+               credentials.insertOne(credentialDocument);
+
+               result = Either.right(getAll().get());
+           } catch (Exception e) {
+               log.error(e.getMessage());
+               result = Either.left(new CustomerError(1,"Error while inserting customer"));
+           }
+           return result;
+       }
+
+
 
     @Override
     public Either<CustomerError, Integer> delete(Customer customer, boolean delete) {
         Either<CustomerError, Integer> result;
 
-        if (!delete) {
-            em = jpautil.getEntityManager();
-            EntityTransaction transaction = em.getTransaction();
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customersCollection = db.getCollection("customers");
+            MongoCollection<Document> credentialsCollection = db.getCollection("credentials");
 
-            try {
-                transaction.begin();
-                CustomersEntity customersEntity = em.find(CustomersEntity.class, customer.getId());
-                if (customersEntity != null) {
-                    em.remove(customersEntity);
-                }
-
-                transaction.commit();
+            if (delete) {
+                customersCollection.deleteOne(new Document("_id", customer.getId()));
+                credentialsCollection.deleteOne(new Document("_id", customer.getId()));
+                result = Either.right(1);
+            } else {
                 result = Either.right(0);
-            } catch (PersistenceException e) {
-                transaction.rollback();
-                if (e instanceof RollbackException) {
-                    result = Either.left(new CustomerError(2, Constants.DUPLICATED_USER_NAME));
-
-                } else {
-                    result = Either.left(new CustomerError(0, Constants.ERROR_WHILE_RETRIEVING_ORDERS));
-                }
-            } finally {
-                em.close();
             }
-        } else {
-            result = deleteRelationsWithCustomers(customer);
+
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            result = Either.left(new CustomerError(1, "Error while deleting customer"));
         }
         return result;
     }
@@ -79,30 +115,17 @@ public class CustomerHibernateImpl implements CustomerDAO {
 
     public Either<CustomerError, List<Customer>> update(Customer customer) {
         Either<CustomerError, List<Customer>> result;
-        em = jpautil.getEntityManager();
-        EntityTransaction transaction = em.getTransaction();
 
-        try {
-            transaction.begin();
-
-            CustomersEntity customersEntity = em.find(CustomersEntity.class, customer.getId());
-            if (customersEntity != null) {
-                customersEntity.setFirstName(customer.getFirst_name());
-                customersEntity.setLastName(customer.getLast_name());
-                customersEntity.setEmail(customer.getEmail());
-                customersEntity.setPhone(customer.getPhone());
-                customersEntity.setDateOfBirth(Date.valueOf(customer.getDate_of_birth()));
-                em.merge(customersEntity);
-            }
-            transaction.commit();
-            List<Customer> updatedCustomers = getAll().get(); // Implementa este método según tus necesidades
-
-            result = Either.right(updatedCustomers);
-        } catch (PersistenceException e) {
-            transaction.rollback();
-            result = Either.left(new CustomerError(0, Constants.ERROR_WHILE_RETRIEVING_ORDERS));
-        } finally {
-            em.close();
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customersCollection = db.getCollection("customers");
+            Document customerDocument = Document.parse(gson.toJson(customer));
+            customerDocument.remove("credentials");
+            customersCollection.replaceOne(new Document("_id", customer.getId()), customerDocument);
+            result = Either.right(getAll().get());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            result = Either.left(new CustomerError(1, "Error while updating customer"));
         }
 
         return result;
@@ -131,40 +154,7 @@ public class CustomerHibernateImpl implements CustomerDAO {
     }
 
 
-    private Either<CustomerError, Integer> deleteRelationsWithCustomers(Customer customer) {
-        em = jpautil.getEntityManager();
-        EntityTransaction transaction = em.getTransaction();
 
-        try {
-            transaction.begin();
-            CustomersEntity customersEntity = em.find(CustomersEntity.class, customer.getId());
-            if (customersEntity == null) {
-                return Either.left(new CustomerError(1, Constants.ERROR_DELETING_CUSTOMER));
-            }
-
-            Collection<OrdersEntity> orders = customersEntity.getOrdersById();
-            for (OrdersEntity order : orders) {
-                Collection<OrderItemsEntity> orderItems = order.getOrderItemsByOrderId();
-                orderItems.forEach(em::remove);
-                em.remove(order);
-            }
-
-            em.remove(customersEntity);
-            transaction.commit();
-            return Either.right(0);
-        } catch (PersistenceException e) {
-
-            if (transaction.isActive()) {
-                transaction.rollback();
-
-            }
-
-
-        } finally {
-            em.close();
-        }
-        return Either.right(0);
-    }
 
 
 }

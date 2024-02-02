@@ -6,6 +6,7 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
+import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.modelo.Order;
 import model.errors.CustomerError;

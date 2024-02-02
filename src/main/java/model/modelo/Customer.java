@@ -25,20 +25,8 @@ public class Customer {
     private String email;
     private String phone;
     private LocalDate date_of_birth;
-    @Transient
     private Credentials credentials;
     private List<Order> orders;
-
-
-    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth, Credentials credentials) {
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.email = email;
-        this.phone = phone;
-        this.date_of_birth = date_of_birth;
-        this.credentials = credentials;
-
-    }
 
 
     public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth) {
@@ -47,6 +35,18 @@ public class Customer {
         this.email = email;
         this.phone = phone;
         this.date_of_birth = date_of_birth;
+
+
+    }
+
+    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth,  List<Order> orders) {
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.email = email;
+        this.phone = phone;
+        this.date_of_birth = date_of_birth;
+
+        this.orders = orders;
     }
 
     public Customer(ObjectId id, String first_name, String last_name, String email, String phone, LocalDate dob) {
@@ -59,13 +59,13 @@ public class Customer {
     }
 
 
-    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth, Credentials credentials, List<Order> orders) {
+    public Customer(String first_name, String last_name, String email, String phone, LocalDate date_of_birth, List<Order> orders, Credentials credentials) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.email = email;
         this.phone = phone;
         this.date_of_birth = date_of_birth;
-        this.credentials = credentials;
         this.orders = orders;
+        this.credentials = credentials;
     }
 }

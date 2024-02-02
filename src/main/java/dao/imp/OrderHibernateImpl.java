@@ -1,5 +1,11 @@
 package dao.imp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import common.Constants;
 import dao.JPAUtil;
 import dao.OrdersDAO;
@@ -10,14 +16,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.PersistenceException;
 import lombok.extern.log4j.Log4j2;
+import model.LocalDateAdapter;
+import model.LocalDateTimeAdapter;
+import model.ObjectIdAdapter;
 import model.modelo.Order;
 import model.modelo.OrderItem;
 import model.errors.OrderError;
 import model.modelHibernate.OrdersEntity;
 import model.modelHibernate.RestaurantTablesEntity;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +39,11 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     private final JPAUtil jpautil;
     private EntityManager em;
-
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .registerTypeAdapter(ObjectId.class, new ObjectIdAdapter())
+            .create();
     @Inject
     public OrderHibernateImpl(JPAUtil jpautil) {
 
@@ -36,26 +52,23 @@ public class OrderHibernateImpl implements OrdersDAO {
     }
 
     @Override
+    //Con mongo
     public Either<OrderError, List<Order>> getAll() {
         Either<OrderError, List<Order>> result;
 
+        //METODO CON MONGO
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customers = db.getCollection("customers");
 
-        try {
-            em = jpautil.getEntityManager();
-            List<OrdersEntity> ordersEntities = em.createQuery("from OrdersEntity", OrdersEntity.class).getResultList();
 
-            List<Order> ordersList = ordersEntities.stream()
-                    .map(OrdersEntity::toOrder)
-                    .toList();
-
-            if (ordersList.isEmpty()) {
-                result = Either.left(new OrderError("Error while retrieving orders"));
-            } else {
-                result = Either.right(ordersList);
-            }
-        } finally {
-            if (em != null) em.close();
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(new OrderError(Constants.ERROR_CONNECTING_TO_DATABASE));
         }
+
+
+
 
         return result;
     }

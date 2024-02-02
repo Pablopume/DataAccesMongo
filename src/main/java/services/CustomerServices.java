@@ -1,6 +1,7 @@
 package services;
 
 import io.vavr.control.Either;
+import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.modelo.Order;
 import model.errors.CustomerError;

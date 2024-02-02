@@ -12,6 +12,7 @@ import model.modelo.OrderItem;
 import ui.screens.common.BaseScreenController;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,12 @@ public class DeleteCustomersController extends BaseScreenController {
             Customer selectedCustomer = selectionModel.getSelectedItem();
             if (selectedCustomer != null) {
                 orderssTable.getItems().clear();
+                if (selectedCustomer.getOrders() != null && !selectedCustomer.getOrders().isEmpty()) {
+                    orderssTable.getItems().setAll(selectedCustomer.getOrders());
+                }else {
+                    selectedCustomer.setOrders(new ArrayList<>());
+                    orderssTable.getItems().setAll(selectedCustomer.getOrders());
+                }
                 orderssTable.getItems().addAll(selectedCustomer.getOrders());
             }
         });
@@ -98,57 +105,41 @@ public class DeleteCustomersController extends BaseScreenController {
             alert.setTitle("Delete Customer");
             alert.setContentText("Do you want to delete this customer?");
             Optional<ButtonType> res = alert.showAndWait();
+
             res.ifPresent(buttonType -> {
                 if (buttonType == ButtonType.YES) {
-                    deleteCustomerViewModel.getServices().delete(selectedCustomer, false).peek(customerInt -> {
-                                if (customerInt == 0) {
-                                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                                    a.setTitle("Customer deleted");
-                                    a.setHeaderText(null);
-                                    a.setContentText("The customer has been deleted successfully");
-                                    a.show();
-                                    orderssTable.getItems().clear();
-                                    customersTable.getItems().remove(selectedCustomer);
-                                }
-                            })
-                            .peekLeft(customerError -> {
-                                if (customerError.getNumError() == 2) {
-                                    Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
-                                    alert2.getButtonTypes().remove(ButtonType.OK);
-                                    alert2.getButtonTypes().add(ButtonType.CANCEL);
-                                    alert2.getButtonTypes().add(ButtonType.YES);
-                                    alert2.setTitle("Delete Customer with orders");
-                                    alert2.setContentText("Do you want to delete this customer and its orders?");
-                                    Optional<ButtonType> res2 = alert2.showAndWait();
-                                    res2.ifPresent(buttonType2 -> {
-                                        if (buttonType2.equals(ButtonType.YES)) {
-                                            deleteCustomerViewModel.getServices().delete(selectedCustomer, true);
-                                        }
-                                    });
+                    if (selectedCustomer.getOrders() == null || selectedCustomer.getOrders().isEmpty()) {
+                        deleteCustomerViewModel.getServices().delete(selectedCustomer, true);
+                        Alert a = new Alert(Alert.AlertType.INFORMATION);
+                        a.setTitle("Customer deleted");
+                        a.setHeaderText(null);
+                        a.setContentText("The customer has been deleted successfully");
+                        a.show();
+                        orderssTable.getItems().clear();
+                        customersTable.getItems().remove(selectedCustomer);
+                    } else {
+                        // Only show this alert once and use the result
+                        Optional<ButtonType> result = new Alert(Alert.AlertType.INFORMATION,
+                                "The customer has orders, are you sure you want to delete it?",
+                                ButtonType.YES, ButtonType.NO).showAndWait();
 
-                                    deleteCustomerViewModel.getServices().delete(selectedCustomer, true).peek(result -> {
-                                                if (result == 0) {
-                                                    Alert a = new Alert(Alert.AlertType.INFORMATION);
-                                                    a.setTitle("Customer deleted");
-                                                    a.setHeaderText(null);
-                                                    a.setContentText("The customer has been deleted");
-                                                    a.show();
-                                                    orderssTable.getItems().clear();
-                                                    customersTable.getItems().remove(selectedCustomer);
-                                                }
-                                            })
-                                            .peekLeft(customerError2 -> getPrincipalController().sacarAlertError(customerError2.getMessage()));
-                                }
-                            });
-                } else {
-                    getPrincipalController().sacarAlertError("Error deleting customer");
+                        if (result.isPresent() && result.get() == ButtonType.YES) {
+                            deleteCustomerViewModel.getServices().delete(selectedCustomer, true);
+                            Alert a = new Alert(Alert.AlertType.INFORMATION);
+                            a.setTitle("Customer deleted");
+                            a.setHeaderText(null);
+                            a.setContentText("The customer has been deleted successfully");
+                            a.show();
+                            orderssTable.getItems().clear();
+                            customersTable.getItems().remove(selectedCustomer);
+                        }
+                    }
                 }
             });
         }
     }
+
 }
-
-
 
 
 

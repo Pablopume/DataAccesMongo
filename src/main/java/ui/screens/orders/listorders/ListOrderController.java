@@ -133,9 +133,9 @@ public class ListOrderController extends BaseScreenController {
     @Override
     public void principalLoaded() {
         listOrderViewModel.loadState();
-        if(!Objects.equals(getPrincipalController().getActualUser().getId(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
-            if(!listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()).isEmpty()){
-                customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()));
+        if(!Objects.equals(getPrincipalController().getActualUser().get_id(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
+            if(!listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()).isEmpty()){
+                customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()));
             }
 
         }else {

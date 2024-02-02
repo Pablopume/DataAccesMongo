@@ -10,7 +10,7 @@ import org.bson.types.ObjectId;
 @Data
 @Builder
 public class Credentials {
-    private ObjectId id;
+    private ObjectId _id;
     private final String user;
     private final String password;
 

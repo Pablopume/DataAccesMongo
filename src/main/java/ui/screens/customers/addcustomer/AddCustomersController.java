@@ -79,7 +79,7 @@ public class AddCustomersController extends BaseScreenController {
 
         } else {
 
-            if (addCustomerViewModel.getServices().add(new Customer(nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(),new Credentials(userName.getText(),password.getText()), Collections.emptyList())).isRight()){
+            if (addCustomerViewModel.getServices().add(new Customer(nameField.getText(),surnameField.getText(),mailField.getText(),phoneField.getText(),dobField.getValue(), Collections.emptyList(),new Credentials(userName.getText(),password.getText()))).isRight()){
 
                 alert.setTitle("Customer added");
                 alert.setHeaderText(null);

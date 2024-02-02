@@ -56,7 +56,7 @@ public class CustomersEntity {
 
     public Customer toCustomer() {
 
-        return new Customer( firstName, lastName, email, phone, dateOfBirth.toLocalDate(), credentialsById.toCredentials(), ordersById.stream().map(OrdersEntity::toOrder).collect(Collectors.toList()));
+        return new Customer( firstName, lastName, email, phone, dateOfBirth.toLocalDate(),  ordersById.stream().map(OrdersEntity::toOrder).collect(Collectors.toList()));
     }
 
 

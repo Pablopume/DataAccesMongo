@@ -87,9 +87,9 @@ public class EditOrderController extends BaseScreenController {
         credentials = getPrincipalController().getActualUser();
 
 
-        if(!Objects.equals(getPrincipalController().getActualUser().getId(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
-            if(!editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()).isEmpty()){
-                orderTable.getItems().setAll(editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().getId()));
+        if(!Objects.equals(getPrincipalController().getActualUser().get_id(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
+            if(!editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()).isEmpty()){
+                orderTable.getItems().setAll(editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()));
             }
 
         }else {

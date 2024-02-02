@@ -186,3 +186,15 @@ Y
 )src/main/java/model/LocalDateAdapter.java,3\b\3b09280e863f958b8a464f0337759ae030859d35
 Å
 Q.idea/sonarlint/securityhotspotstore/0/f/0f5413cd6a674557eb075c0bf899dce3773a0b3b,5\c\5ceaadac275a0cdd366ad6dd4c34c03717630700
+e
+5src/main/java/model/converters/CustomerConverter.java,7\c\7c0b35bb504f23bb7a0d1977def06d308d20d5ad
+d
+4src/main/java/model/modelo/LocalDateTimeAdapter.java,6\0\6036244b01633d292a8267507a6fac64854d6360
+]
+-src/main/java/model/LocalDateTimeAdapter.java,a\c\acbf54e6bf914a2d9615de55ad8d7a88a8ba1ef3
+X
+(src/main/java/model/ObjectIdAdapter.java,e\e\ee647381a46192f43032c8333cb2f82caf2a8e8c
+b
+2src/main/java/model/converters/OrderConverter.java,4\3\43a3458403a1c9c89655b5fe541cbf45d046e703
+f
+6src/main/java/model/converters/OrderItemConverter.java,c\3\c3e7a1efeaf0ae84a62c592934e75a83a526ec43

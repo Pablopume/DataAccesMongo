@@ -1,6 +1,23 @@
 
-r	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íçÄ£ýÿÿÿÿ8¢…Ô¢Ö1
-r	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(íçÄ£ýÿÿÿÿ8£…Ô¢Ö1
-q	java:S116"URename this field "first_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è•Ûì8º…Ô¢Ö1
-p	java:S116"TRename this field "last_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šø´¯8º…Ô¢Ö1
-s	java:S116"XRename this field "date_of_birth" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ôà¯k8º…Ô¢Ö1
+r	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ëå„Çÿÿÿÿÿ8§‘âÉÖ1
+r	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ëå„Çÿÿÿÿÿ8¨‘âÉÖ1
+r	java:S117 "QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ëå„Çÿÿÿÿÿ8¨‘âÉÖ1
+m	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Å†ö8ª‘âÉÖ1
+m	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Å†ö8ª‘âÉÖ1
+m	java:S117*"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(÷Å†ö8’×ÏËÖ1
+r	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÜØ–üÿÿÿÿ8’×ÏËÖ1
+r	java:S1174"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(œÜØ–üÿÿÿÿ8’×ÏËÖ1
+m	java:S117>"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àú©®8Å·€ÌÖ1
+m	java:S117>"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àú©®8Å·€ÌÖ1
+m	java:S117>"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Àú©®8Å·€ÌÖ1
+q	java:S116"URename this field "first_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è•Ûì8º…Ô¢Ö1
+p	java:S116"TRename this field "last_name" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(šø´¯8º…Ô¢Ö1
+s	java:S116"XRename this field "date_of_birth" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ôà¯k8º…Ô¢Ö1
+R
+java:S1128"0Remove this unused import 'jakarta.persistence'.(Î«Ô§úÿÿÿÿ8®ƒ×ÍÖ1
+^
+java:S1128"ARemove this unused import 'model.modelHibernate.CustomersEntity'.(Â¨Å¸8®ƒ×ÍÖ1
+G
+java:S1128"*Remove this unused import 'java.sql.Date'.(ÙÀ½Ê8®ƒ×ÍÖ1
+\
+java:S1128"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8®ƒ×ÍÖ1
