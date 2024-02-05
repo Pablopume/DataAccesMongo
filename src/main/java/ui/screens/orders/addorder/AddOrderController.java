@@ -2,6 +2,7 @@ package ui.screens.orders.addorder;
 
 import common.Constants;
 import jakarta.inject.Inject;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -43,7 +44,7 @@ public class AddOrderController extends BaseScreenController {
     AddOrderViewModel addOrderViewModel;
 
     public void initialize() {
-        menuItem.setCellValueFactory(new PropertyValueFactory<>("menuItem"));
+        menuItem.setCellValueFactory(cellData ->new SimpleStringProperty(addOrderViewModel.getMenuItemService().get(cellData.getValue().getMenuItemId()).get().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         addOrderViewModel.voidState();
@@ -51,24 +52,24 @@ public class AddOrderController extends BaseScreenController {
     }
 
 
-//    public void addOrder() {
-//
-//        ObjectId selectedCustomerId = actualuser.getId();
-//        int selectedTableId = Integer.parseInt(table_id.getValue());
-//         addOrderViewModel.getServices().createOrder(new Order(LocalDateTime.now(), selectedCustomerId, selectedTableId,ordersXMLTable.getItems())).get();
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle(Constants.ORDER_ADDED);
-//        alert.setHeaderText(null);
-//        alert.setContentText(Constants.THE_ORDER_HAS_BEEN_ADDED);
-//        alert.showAndWait();
-//
-//    }
+    public void addOrder() {
 
-//    public void addItem() {
-//        ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
-//        orderItem.add(new OrderItem(addOrderViewModel.getOrderItemService().getAutoId(), addOrderViewModel.getServices().getLastId() + 1, Integer.parseInt(quantityItems.getText()), addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
-//        ordersXMLTable.setItems(orderItem);
-//    }
+        ObjectId selectedCustomerId = actualuser.get_id();
+        int selectedTableId = Integer.parseInt(table_id.getValue());
+         addOrderViewModel.getServices().createOrder(new Order(LocalDateTime.now(), selectedTableId, ordersXMLTable.getItems()),selectedCustomerId).get();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(Constants.ORDER_ADDED);
+        alert.setHeaderText(null);
+        alert.setContentText(Constants.THE_ORDER_HAS_BEEN_ADDED);
+        alert.showAndWait();
+
+    }
+
+  public void addItem() {
+      ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
+       orderItem.add(new OrderItem( Integer.parseInt(quantityItems.getText()), addOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
+        ordersXMLTable.setItems(orderItem);
+    }
 
     public void removeOrder() {
 

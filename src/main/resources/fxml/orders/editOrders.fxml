@@ -9,11 +9,9 @@
 
     <TextField fx:id="tableFIeld" layoutX="27.0" layoutY="99.0" promptText="Table Id" />
     <Button layoutX="27.0" layoutY="142.0" mnemonicParsing="false" onAction="#editOrder" text="Update Order" />
-    <TableView fx:id="orderTable" layoutX="216.0" layoutY="38.0" prefHeight="343.0" prefWidth="345.0">
+    <TableView fx:id="orderTable" layoutX="216.0" layoutY="38.0" prefHeight="343.0" prefWidth="232.0">
         <columns>
-            <TableColumn fx:id="idOrder" prefWidth="33.0" text="Id" />
             <TableColumn fx:id="orderDate" prefWidth="135.0" text="Order's date" />
-            <TableColumn fx:id="customerId" prefWidth="73.0" text="Customer Id" />
             <TableColumn fx:id="tableId" prefWidth="103.0" text="Table Id" />
         </columns>
     </TableView>

@@ -2,6 +2,7 @@ package ui.screens.orders.editorder;
 
 import common.Constants;
 import jakarta.inject.Inject;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,16 +43,14 @@ public class EditOrderController extends BaseScreenController {
 
     public void initialize() {
 
-        idOrder.setCellValueFactory(new PropertyValueFactory<>(Constants.ID));
+
         orderDate.setCellValueFactory(new PropertyValueFactory<>(Constants.DATE));
-        customerId.setCellValueFactory(new PropertyValueFactory<>(Constants.CUSTOMER_ID));
         tableId.setCellValueFactory(new PropertyValueFactory<>(Constants.TABLE_ID));
-        menuItem.setCellValueFactory(new PropertyValueFactory<>("menuItem"));
+        menuItem.setCellValueFactory(cellData ->new SimpleStringProperty(editOrderViewModel.getMenuItemService().get(cellData.getValue().getMenuItemId()).get().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         orderTable.setOnMouseClicked(event -> {
             Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
-            ordersXMLTable.getItems().setAll(editOrderViewModel.getOrderItemService().getOrdersById(selectedOrder.getId()));
-
+            ordersXMLTable.getItems().setAll(selectedOrder.getOrderItemList());
 
 
         });
@@ -87,12 +86,12 @@ public class EditOrderController extends BaseScreenController {
         credentials = getPrincipalController().getActualUser();
 
 
-        if(!Objects.equals(getPrincipalController().getActualUser().get_id(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
-            if(!editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()).isEmpty()){
+        if (!getPrincipalController().getActualUser().getUser().equals("root")) {
+            if (!editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()).isEmpty()) {
                 orderTable.getItems().setAll(editOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()));
             }
 
-        }else {
+        } else {
             if (!editOrderViewModel.getServices().getAll().isEmpty()) {
                 orderTable.getItems().setAll(editOrderViewModel.getServices().getAll().get());
             }
@@ -105,8 +104,8 @@ public class EditOrderController extends BaseScreenController {
         SelectionModel<Order> selectionModel = orderTable.getSelectionModel();
         Order selectedOrder = selectionModel.getSelectedItem();
 
-        editOrderViewModel.getServices().update(new Order(selectedOrder.getId(), LocalDateTime.now(),selectedOrder.getCustomer_id(), Integer.parseInt(tableFIeld.getText()),ordersXMLTable.getItems()));
-     //   editOrderViewModel.getOrderItemService().update(ordersXMLTable.getItems());
+        editOrderViewModel.getServices().update(new Order(selectedOrder.getDate(), Integer.parseInt(tableFIeld.getText()), ordersXMLTable.getItems()));
+        //   editOrderViewModel.getOrderItemService().update(ordersXMLTable.getItems());
         orders.clear();
         orders.addAll(editOrderViewModel.getServices().getAll().get());
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -119,13 +118,13 @@ public class EditOrderController extends BaseScreenController {
     public void addOrder() {
 
         Order selectedOrder = orderTable.getSelectionModel().getSelectedItem();
-        ObservableList<OrderItem> orderItem= ordersXMLTable.getItems();
-        orderItem.add(new OrderItem(null,selectedOrder.getId(),Integer.parseInt(quantityItems.getText()),editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
+        ObservableList<OrderItem> orderItem = ordersXMLTable.getItems();
+        orderItem.add(new OrderItem(Integer.parseInt(quantityItems.getText()), editOrderViewModel.getMenuItemService().getByName(menuItems.getValue()).getId()));
         ordersXMLTable.setItems(orderItem);
     }
 
     public void deleteOrder() {
-        ObservableList<OrderItem> orderItemXMLS= ordersXMLTable.getItems();
+        ObservableList<OrderItem> orderItemXMLS = ordersXMLTable.getItems();
         OrderItem selectedOrder = ordersXMLTable.getSelectionModel().getSelectedItem();
         orderItemXMLS.remove(selectedOrder);
         ordersXMLTable.setItems(orderItemXMLS);

@@ -32,8 +32,8 @@ public class OrderServicesImpl implements OrderServices {
         return ordersDAO.delete(order);
     }
 
-    public Either<OrderError, Order> createOrder(Order order) {
-        return ordersDAO.add(order);
+    public Either<OrderError, Order> createOrder(Order order, ObjectId id) {
+        return ordersDAO.add(order, id);
     }
 
     @Override
@@ -45,26 +45,15 @@ public class OrderServicesImpl implements OrderServices {
             List<Order> allOrders = result.get();
             List<Order> ordersByDate = allOrders.stream()
                     .filter(order -> order.getDate().toLocalDate().equals(date))
-                    .collect(Collectors.toList());
+                    .toList();
             return Either.right(ordersByDate);
         }
     }
 
     @Override
     public List<Order> getOrdersByCustomerId(ObjectId id) {
-        Either<OrderError, List<Order>> result = ordersDAO.getAll();
-
-        if (result.isLeft()) {
-            return Collections.emptyList();
-        } else {
-            List<Order> allOrders = result.get();
-            return allOrders.stream()
-                    .filter(order -> order.getCustomer_id() == id)
-                    .toList();
-        }
+        return ordersDAO.getAll(id).get();
     }
-
-
 
 
     @Override

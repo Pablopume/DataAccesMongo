@@ -13,12 +13,12 @@ import java.util.List;
 
 public class CustomerConverter {
     private final OrderConverter orderConverter;
-    private final OrderItemConverter orderItemConverter;
+
 
     @Inject
     public CustomerConverter(OrderConverter orderConverter, OrderItemConverter orderItemConverter) {
         this.orderConverter = orderConverter;
-        this.orderItemConverter = orderItemConverter;
+
     }
 
     public Customer fromDocument(Document document) {
@@ -36,16 +36,6 @@ public class CustomerConverter {
             List<Order> orders = new ArrayList<>();
             for (Document orderDocument : ordersDocuments) {
                 Order order = orderConverter.fromDocument(orderDocument);
-                List<Document> orderItemsDocuments = (List<Document>) orderDocument.get("orderItemList");
-                if (orderItemsDocuments != null) {
-                    List<OrderItem> orderItems = new ArrayList<>();
-                    for (Document orderItemDocument : orderItemsDocuments) {
-                        OrderItem orderItem = orderItemConverter.fromDocument(orderItemDocument);
-                        orderItems.add(orderItem);
-                    }
-                    order.setOrderItemList(orderItems);
-                }
-
                 orders.add(order);
             }
             customer.setOrders(orders);

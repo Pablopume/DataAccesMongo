@@ -1,22 +1,20 @@
 
 s
-java:S1104!"VMake tableFIeld a static final constant or non-public and provide accessors if needed.(Ñ‘¹Ù8‚Ÿ¡ÌÖ1
+java:S1104!"VMake tableFIeld a static final constant or non-public and provide accessors if needed.(Ñ‘¹Ù8É†ç´Ö1
 w
-java:S1104""ZMake ordersXMLTable a static final constant or non-public and provide accessors if needed.(àş´8ƒŸ¡ÌÖ1
+java:S1104""ZMake ordersXMLTable a static final constant or non-public and provide accessors if needed.(àş´8Ê†ç´Ö1
 v
-java:S1104#"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8ƒŸ¡ÌÖ1
+java:S1104#"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8Ê†ç´Ö1
 p
-java:S1104$"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38ƒŸ¡ÌÖ1
+java:S1104$"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38Ê†ç´Ö1
 v
-java:S1104%"YMake quantityItems a static final constant or non-public and provide accessors if needed.(÷öäí8ƒŸ¡ÌÖ1
+java:S1104%"YMake quantityItems a static final constant or non-public and provide accessors if needed.(÷öäí8Ê†ç´Ö1
 r
-java:S1104&"UMake menuItems a static final constant or non-public and provide accessors if needed.(ƒ´ãÄ8ƒŸ¡ÌÖ1
-d
-java:S6813("BRemove this field injection and use constructor injection instead.(Áº–üÿÿÿÿ8½Ÿ¡ÌÖ1
+java:S1104&"UMake menuItems a static final constant or non-public and provide accessors if needed.(ƒ´ãÄ8Ê†ç´Ö1
 |
-java:S1450'"ZRemove the "credentials" field and declare it as a local variable in the relevant methods.(şàìùşÿÿÿÿ8¿Ÿ¡ÌÖ1
-X	java:S125m"<This block of commented-out lines of code should be removed.(¢»§8ÍŸ¡ÌÖ1
+java:S1450'"ZRemove the "credentials" field and declare it as a local variable in the relevant methods.(şàìùşÿÿÿÿ8ã†ç´Ö1
+X	java:S125m"<This block of commented-out lines of code should be removed.(¢»§8ê†ç´Ö1
 W
-java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8ı¤õÎÖ1
+java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8ò²ê´Ö1
 Q
-java:S1068'"/Remove this unused "credentials" private field.(şàìùşÿÿÿÿ8ÔŸ¡ÌÖ1
+java:S1068'"/Remove this unused "credentials" private field.(şàìùşÿÿÿÿ8ì†ç´Ö1

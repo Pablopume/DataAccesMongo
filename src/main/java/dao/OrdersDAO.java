@@ -11,7 +11,7 @@ public interface OrdersDAO {
     Either<OrderError, List<Order>> getAll();
     Either<OrderError, List<Order>> getAll(ObjectId id);
     Either<OrderError, Integer> delete(Order order);
-    Either<OrderError, Order> add(Order order);
+    Either<OrderError, Order> add(Order order,ObjectId id);
     Either<OrderError, Integer> update(Order c);
 
 }

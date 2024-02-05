@@ -1,37 +1,35 @@
 
 Q
-java:S3740$"/Provide the parametrized type for this generic.(ŒÎ›Šûÿÿÿÿ8 »äÍÖ1
+java:S3740#"/Provide the parametrized type for this generic.(ŒÎ›Šûÿÿÿÿ8ø¶İ³Ö1
 Q
-java:S3740%"/Provide the parametrized type for this generic.(Ãóª•úÿÿÿÿ8 »äÍÖ1
+java:S3740$"/Provide the parametrized type for this generic.(Ãóª•úÿÿÿÿ8ù¶İ³Ö1
 Q
-java:S3740&"/Provide the parametrized type for this generic.(ğ… ûÿÿÿÿ8 »äÍÖ1
+java:S3740%"/Provide the parametrized type for this generic.(ğ… ûÿÿÿÿ8ù¶İ³Ö1
 Q
-java:S3740'"/Provide the parametrized type for this generic.(¶€î›úÿÿÿÿ8 »äÍÖ1
+java:S3740&"/Provide the parametrized type for this generic.(¶€î›úÿÿÿÿ8ù¶İ³Ö1
 |
-java:S1104$"ZMake ordersCustomer a static final constant or non-public and provide accessors if needed.(ŒÎ›Šûÿÿÿÿ8¡»äÍÖ1
+java:S1104#"ZMake ordersCustomer a static final constant or non-public and provide accessors if needed.(ŒÎ›Šûÿÿÿÿ8ú¶İ³Ö1
 u
-java:S1104%"SMake product a static final constant or non-public and provide accessors if needed.(Ãóª•úÿÿÿÿ8¡»äÍÖ1
+java:S1104$"SMake product a static final constant or non-public and provide accessors if needed.(Ãóª•úÿÿÿÿ8ú¶İ³Ö1
 w
-java:S1104&"UMake idProduct a static final constant or non-public and provide accessors if needed.(ğ… ûÿÿÿÿ8¡»äÍÖ1
+java:S1104%"UMake idProduct a static final constant or non-public and provide accessors if needed.(ğ… ûÿÿÿÿ8ú¶İ³Ö1
 s
-java:S1104'"QMake price a static final constant or non-public and provide accessors if needed.(¶€î›úÿÿÿÿ8¡»äÍÖ1
+java:S1104&"QMake price a static final constant or non-public and provide accessors if needed.(¶€î›úÿÿÿÿ8ú¶İ³Ö1
 u
-java:S1104("XMake orderssTable a static final constant or non-public and provide accessors if needed.(Òô†ø8¡»äÍÖ1
+java:S1104'"XMake orderssTable a static final constant or non-public and provide accessors if needed.(Òô†ø8ú¶İ³Ö1
 p
-java:S1104)"SMake idOrder a static final constant or non-public and provide accessors if needed.(¢÷½¿8¡»äÍÖ1
+java:S1104("SMake idOrder a static final constant or non-public and provide accessors if needed.(¢÷½¿8ú¶İ³Ö1
 r
-java:S1104*"UMake orderDate a static final constant or non-public and provide accessors if needed.(ì«ÂÕ8¡»äÍÖ1
+java:S1104)"UMake orderDate a static final constant or non-public and provide accessors if needed.(ì«ÂÕ8ú¶İ³Ö1
 s
-java:S1104+"VMake customerId a static final constant or non-public and provide accessors if needed.(ŒÊ»ê8¡»äÍÖ1
+java:S1104*"VMake customerId a static final constant or non-public and provide accessors if needed.(ŒÊ»ê8ú¶İ³Ö1
 u
-java:S1104,"SMake tableId a static final constant or non-public and provide accessors if needed.(–Ö³ªşÿÿÿÿ8¡»äÍÖ1
-d
-java:S6813."BRemove this field injection and use constructor injection instead.(Áº–üÿÿÿÿ8º»äÍÖ1
+java:S1104+"SMake tableId a static final constant or non-public and provide accessors if needed.(–Ö³ªşÿÿÿÿ8ú¶İ³Ö1
 t
-java:S3776`"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(…‹÷–øÿÿÿÿ8Â»äÍÖ1
+java:S3776Y"RRefactor this method to reduce its Cognitive Complexity from 29 to the 15 allowed.(…‹÷–øÿÿÿÿ8“·İ³Ö1
 W
-java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8Ç»äÍÖ1
+java:S1128"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8¦ÿİ³Ö1
 U
-java:S1128"3Remove this unused import 'model.modelo.OrderItem'.(‡¹íÿÿÿÿÿ8Ç»äÍÖ1
+java:S1128"3Remove this unused import 'model.modelo.OrderItem'.(‡¹íÿÿÿÿÿ8™·İ³Ö1
 M
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8Ç»äÍÖ1
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8š·İ³Ö1

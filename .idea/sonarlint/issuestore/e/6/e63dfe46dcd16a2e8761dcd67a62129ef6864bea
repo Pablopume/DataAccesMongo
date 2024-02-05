@@ -1,0 +1,23 @@
+
+[
+java:S1128"9Remove this unused import 'jakarta.xml.bind.JAXBContext'.(Τ”νόÿÿÿÿ8Δ―¶Φ1
+X
+java:S1128";Remove this unused import 'jakarta.xml.bind.JAXBException'.(¬ε†ΐ8Δ―¶Φ1
+Z
+java:S1128"8Remove this unused import 'jakarta.xml.bind.Marshaller'.(ύ¨†‚ώÿÿÿÿ8Δ―¶Φ1
+\
+java:S1128	":Remove this unused import 'jakarta.xml.bind.Unmarshaller'.(δ§“ωÿÿÿÿ8™Δ―¶Φ1
+P
+java:S1128"3Remove this unused import 'model.xml.OrderItemXML'.(ωΣ«8™Δ―¶Φ1
+L
+java:S1128"/Remove this unused import 'model.xml.OrderXML'.(„Έν8™Δ―¶Φ1
+M
+java:S1128"0Remove this unused import 'model.xml.OrdersXML'.(ΤÒ“ν8™Δ―¶Φ1
+F
+java:S1128")Remove this unused import 'java.io.File'.(†Π¥Ε8™Δ―¶Φ1
+L
+java:S1128"/Remove this unused import 'java.nio.file.Path'.(Χ²κΒ8™Δ―¶Φ1
+M
+java:S1128"0Remove this unused import 'java.nio.file.Paths'.(αθ°―8™Δ―¶Φ1
+M
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(χ‰ξƒ8™Δ―¶Φ1

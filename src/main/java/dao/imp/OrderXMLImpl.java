@@ -39,7 +39,7 @@ public class OrderXMLImpl implements OrdersDAO {
     }
 
     @Override
-    public Either<OrderError, Order> add(Order order) {
+    public Either<OrderError, Order> add(Order order, ObjectId id) {
         return null;
     }
 

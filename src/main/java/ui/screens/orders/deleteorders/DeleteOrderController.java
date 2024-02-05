@@ -2,6 +2,7 @@ package ui.screens.orders.deleteorders;
 
 import common.Constants;
 import jakarta.inject.Inject;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,11 +38,9 @@ public class DeleteOrderController extends BaseScreenController {
     DeleteOrderViewModel deleteOrderViewModel;
 
     public void initialize() {
-        idOrder.setCellValueFactory(new PropertyValueFactory<>(Constants.ID));
         orderDate.setCellValueFactory(new PropertyValueFactory<>(Constants.DATE));
-        customerId.setCellValueFactory(new PropertyValueFactory<>(Constants.CUSTOMER_ID));
         tableId.setCellValueFactory(new PropertyValueFactory<>(Constants.TABLE_ID));
-        menuItem.setCellValueFactory(new PropertyValueFactory<>("menuItem"));
+        menuItem.setCellValueFactory(cellData ->new SimpleStringProperty(deleteOrderViewModel.getMenuItemService().get(cellData.getValue().getMenuItemId()).get().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         deleteOrderViewModel.getState().addListener((observableValue, oldValue, newValue) -> {
@@ -59,7 +58,7 @@ public class DeleteOrderController extends BaseScreenController {
         );
         ordersTable.setOnMouseClicked(event -> {
             Order selectedOrder = ordersTable.getSelectionModel().getSelectedItem();
-            ordersXMLTable.getItems().setAll(deleteOrderViewModel.getOrderItemService().getOrdersById(selectedOrder.getId()));
+            ordersXMLTable.getItems().setAll(selectedOrder.getOrderItemList());
 
         });
         deleteOrderViewModel.voidState();
@@ -69,8 +68,11 @@ public class DeleteOrderController extends BaseScreenController {
     @Override
     public void principalLoaded() {
         deleteOrderViewModel.loadState();
-        if(!Objects.equals(getPrincipalController().getActualUser().get_id(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
+        if(!getPrincipalController().getActualUser().getUser().equals("root")) {
             ordersTable.getItems().setAll(deleteOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()));
+        }
+        else {
+            ordersTable.getItems().setAll(deleteOrderViewModel.getServices().getAll().get());
         }
     }
 

@@ -1,17 +1,17 @@
 
 t
-java:S1104"RMake priceT a static final constant or non-public and provide accessors if needed.(ì‰ºïşÿÿÿÿ8ËÎ‹ÉÖ1
+java:S1104"RMake priceT a static final constant or non-public and provide accessors if needed.(ì‰ºïşÿÿÿÿ8¼——´Ö1
 t
-java:S11040"WMake ordersTable a static final constant or non-public and provide accessors if needed.(ù±8ÌÎ‹ÉÖ1
+java:S11040"WMake ordersTable a static final constant or non-public and provide accessors if needed.(ù±8¼——´Ö1
 v
-java:S11041"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8ÎÎ‹ÉÖ1
+java:S11041"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8¼——´Ö1
 p
-java:S11042"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38ÑÎ‹ÉÖ1
+java:S11042"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38¼——´Ö1
 u
-java:S11043"XMake nameCustomer a static final constant or non-public and provide accessors if needed.(˜Œºï8ÑÎ‹ÉÖ1
+java:S11043"XMake nameCustomer a static final constant or non-public and provide accessors if needed.(˜Œºï8¼——´Ö1
 m
-java:S11044"QMake price a static final constant or non-public and provide accessors if needed.(¿æ‡'8ÒÎ‹ÉÖ1
-X	java:S125K"<This block of commented-out lines of code should be removed.(íğ¿Ô8¯Ğ‹ÉÖ1
+java:S11044"QMake price a static final constant or non-public and provide accessors if needed.(¿æ‡'8¼——´Ö1
+X	java:S125K"<This block of commented-out lines of code should be removed.(íğ¿Ô8æì£´Ö1
 ^
-java:S1117m"<Rename "menuItem" which hides the field declared at line 49.(ê¦éøÿÿÿÿ8ÃĞ‹ÉÖ1
-X	java:S125q"<This block of commented-out lines of code should be removed.(¿Ï»š8ÈĞ‹ÉÖ1
+java:S1117m"<Rename "menuItem" which hides the field declared at line 49.(ê¦éøÿÿÿÿ8Ü——´Ö1
+X	java:S125q"<This block of commented-out lines of code should be removed.(¿Ï»š8¥¥¤´Ö1

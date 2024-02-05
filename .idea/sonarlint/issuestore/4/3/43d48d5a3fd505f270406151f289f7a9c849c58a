@@ -2,4 +2,4 @@
 o
 java:S62040"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(ª™¨¹8³´ñ˜½1
 N
-java:S1128"1Remove this unused import 'java.util.Comparator'.(î¹ó¹8™£ÕÎÖ1
+java:S1128"1Remove this unused import 'java.util.Comparator'.(î¹ó¹8¾Á¯¶Ö1

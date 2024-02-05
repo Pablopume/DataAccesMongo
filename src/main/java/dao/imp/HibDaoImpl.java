@@ -21,11 +21,9 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import model.modelHibernate.OrdersEntity;
 import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.modelo.MenuItem;
-import model.modelo.Order;
 import org.bson.Document;
 
 import java.time.LocalDate;

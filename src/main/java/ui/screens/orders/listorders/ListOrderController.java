@@ -58,9 +58,7 @@ public class ListOrderController extends BaseScreenController {
 
         datePicker.setVisible(false);
         customerTextField.setVisible(false);
-        idOrder.setCellValueFactory(new PropertyValueFactory<>(Constants.ID));
         orderDate.setCellValueFactory(new PropertyValueFactory<>(Constants.DATE));
-        customerId.setCellValueFactory(new PropertyValueFactory<>(Constants.CUSTOMER_ID));
         tableId.setCellValueFactory(new PropertyValueFactory<>(Constants.TABLE_ID));
         menuItem.setCellValueFactory(cellData ->new SimpleStringProperty(listOrderViewModel.getMenuItemService().get(cellData.getValue().getMenuItemId()).get().getName()));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -100,8 +98,8 @@ public class ListOrderController extends BaseScreenController {
         customersTable.setOnMouseClicked(event -> {
             Order selectedOrder = customersTable.getSelectionModel().getSelectedItem();
 
-            price.setText(String.valueOf(listOrderViewModel.getOrderItemService().getTotalPrice(selectedOrder.getId())));
-           ordersTable.getItems().setAll(listOrderViewModel.getOrderItemService().getOrdersById(selectedOrder.getId()));
+           // price.setText(String.valueOf(listOrderViewModel.getOrderItemService().getTotalPrice(null)));
+           ordersTable.getItems().setAll(selectedOrder.getOrderItemList());
 
             priceT.setCellValueFactory(cellData -> {
                 OrderItem orderItem = cellData.getValue();
@@ -133,7 +131,7 @@ public class ListOrderController extends BaseScreenController {
     @Override
     public void principalLoaded() {
         listOrderViewModel.loadState();
-        if(!Objects.equals(getPrincipalController().getActualUser().get_id(), new ObjectId("65bbf7ab4501431b5af7f5fe"))) {
+        if(!getPrincipalController().getActualUser().getUser().equals("root")) {
             if(!listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()).isEmpty()){
                 customersTable.getItems().setAll(listOrderViewModel.getServices().getOrdersByCustomerId(getPrincipalController().getActualUser().get_id()));
             }

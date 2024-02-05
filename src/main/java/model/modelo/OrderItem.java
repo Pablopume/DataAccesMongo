@@ -7,11 +7,9 @@ import model.modelHibernate.OrderItemsEntity;
 import org.bson.types.ObjectId;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class OrderItem {
-    private ObjectId id;
-    private ObjectId idOrder;
+
     private int quantity;
     private int menuItemId;
 

@@ -177,14 +177,14 @@ public class PrincipalController {
     public void onLoginDone(Credentials usuario) {
         actualUser = usuario;
         menuPrincipal.setVisible(true);
-        if(usuario.get_id()==new ObjectId("65bbf7ab4501431b5af7f5fe")){
-            addOrders.setVisible(true);
+        if(usuario.getUser().equals("root")){
+            addOrders.setVisible(false);
             menuCustomers.setVisible(true);
             deleteOrders.setVisible(true);
         }else {
             addOrders.setVisible(true);
-            menuCustomers.setVisible(true);
-            deleteOrders.setVisible(true);
+            menuCustomers.setVisible(false);
+            deleteOrders.setVisible(false);
 
         }
 

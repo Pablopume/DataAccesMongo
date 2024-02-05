@@ -1,50 +1,55 @@
 package dao.imp;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.mongodb.Mongo;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import dao.JPAUtil;
 import dao.LoginDAO;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import model.LocalDateAdapter;
+import model.LocalDateTimeAdapter;
+import model.ObjectIdAdapter;
 import model.modelo.Credentials;
 import model.modelHibernate.CredentialsEntity;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class LoginHibernateImpl implements LoginDAO {
 
-private final JPAUtil jpautil;
-private EntityManager em;
-    @Inject
-    public LoginHibernateImpl(JPAUtil jpautil) {
-        this.jpautil = jpautil;
-    }
 
+
+    private final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
+            .registerTypeAdapter(ObjectId.class, new ObjectIdAdapter())
+            .create();
 
     @Override
     public Either<String, List<Credentials>> getAll() {
         Either<String, List<Credentials>> response;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customersCollection = db.getCollection("credentials");
+            List<Credentials> credentials = customersCollection.find().map(document -> gson.fromJson(document.toJson(), Credentials.class)).into(new ArrayList<>());
+            response = Either.right(credentials);
 
-
-        try {
-            em = jpautil.getEntityManager();
-            List<CredentialsEntity> credentialsEntities = em.createQuery("from CredentialsEntity", CredentialsEntity.class).getResultList();
-
-            List<Credentials> credentialsList = credentialsEntities.stream()
-                    .map(CredentialsEntity::toCredentials)
-                    .toList();
-
-            if (credentialsList.isEmpty()) {
-                response = Either.left("Error while retrieving credentials");
-            } else {
-                response = Either.right(credentialsList);
-            }
-        } finally {
-            if (em != null) em.close();
+        } catch (Exception e) {
+            response = Either.left(e.getMessage());
         }
 
         return response;
+
     }
-
-
-
 }
