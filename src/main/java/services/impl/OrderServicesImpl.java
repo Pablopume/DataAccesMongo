@@ -21,7 +21,7 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     public Either<OrderError, List<Order>> getAll() {
-        return ordersDAO.get();
+        return ordersDAO.getAll();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public Either<OrderError, List<Order>> filteredListDate(LocalDate date) {
-        Either<OrderError, List<Order>> result = ordersDAO.get();
+        Either<OrderError, List<Order>> result = ordersDAO.getAll();
         if (result.isLeft()) {
             return Either.left(result.getLeft());
         } else {

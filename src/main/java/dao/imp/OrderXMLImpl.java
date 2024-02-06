@@ -24,7 +24,7 @@ import java.util.List;
 @Named("OrderXMLImpl")
 public class OrderXMLImpl implements OrdersDAO {
     @Override
-    public Either<OrderError, List<Order>> get() {
+    public Either<OrderError, List<Order>> getAll() {
         return null;
     }
 

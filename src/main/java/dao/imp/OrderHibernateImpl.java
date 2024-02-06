@@ -51,7 +51,7 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     @Override
     //Con mongo
-    public Either<OrderError, List<Order>> get() {
+    public Either<OrderError, List<Order>> getAll() {
         Either<OrderError, List<Order>> result;
 
         //METODO CON MONGO
@@ -117,15 +117,29 @@ public class OrderHibernateImpl implements OrdersDAO {
         try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
+            Bson filter = Filters.elemMatch("orders", Filters.regex("date", formattedDate));
 
-            Bson filter = Filters.eq("date", formattedDate);
-            Bson update = Updates.pull("orders", Filters.eq("date", formattedDate));
-            UpdateResult updateResult = customers.updateOne(filter, update);
-            if (updateResult.getModifiedCount() > 0) {
-                result = Either.right(1);
+            Document customerDocument = customers.find(filter).first();
+            if(customerDocument != null) {
+                List<Document> ordersDocuments = (List<Document>) customerDocument.get("orders");
+                if (ordersDocuments != null) {
+                    List<Document> newOrdersDocuments = ordersDocuments.stream()
+                            .filter(orderDocument -> !orderDocument.getString("date").equals(formattedDate))
+                            .toList();
+                    Bson update = Updates.set("orders", newOrdersDocuments);
+                    UpdateResult updateResult = customers.updateOne(filter, update);
+                    if (updateResult.getModifiedCount() > 0) {
+                        result = Either.right(1);
+                    } else {
+                        result = Either.left(new OrderError("Error while deleting order"));
+                    }
+                } else {
+                    result = Either.left(new OrderError("Error while deleting order"));
+                }
             } else {
                 result = Either.left(new OrderError("Error while deleting order"));
             }
+
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result = Either.left(new OrderError("Error while deleting order"));
@@ -137,7 +151,43 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     @Override
     public Either<OrderError, Integer> update(Order order) {
-        return null;
+       Either<OrderError, Integer> result;
+       try(MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+           MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+           MongoCollection<Document> customers = db.getCollection("customers");
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+           String formattedDate = order.getDate().format(formatter);
+           Bson filter = Filters.elemMatch("orders", Filters.regex("date", formattedDate));
+           Document customerDocument = customers.find(filter).first();
+           if(customerDocument != null) {
+               List<Document> ordersDocuments = (List<Document>) customerDocument.get("orders");
+               if (ordersDocuments != null) {
+                   List<Document> newOrdersDocuments = ordersDocuments.stream()
+                           .map(orderDocument -> {
+                               if (orderDocument.getString("date").equals(formattedDate)) {
+                                   return orderConverter.toDocument(order);
+                               } else {
+                                   return orderDocument;
+                               }
+                           })
+                           .toList();
+                   Bson update = Updates.set("orders", newOrdersDocuments);
+                   UpdateResult updateResult = customers.updateOne(filter, update);
+                   if (updateResult.getModifiedCount() > 0) {
+                       result = Either.right(1);
+                   } else {
+                       result = Either.left(new OrderError("Error while updating order"));
+                   }
+               } else {
+                   result = Either.left(new OrderError("Error while updating order"));
+               }
+           } else {
+               result = Either.left(new OrderError("Error while updating order"));
+           }
+       } catch (Exception ex) {
+           log.error(ex.getMessage());
+           result = Either.left(new OrderError("Error while updating order"));
+       }
 
 
     }
