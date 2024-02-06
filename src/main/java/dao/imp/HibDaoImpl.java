@@ -49,8 +49,8 @@ public class HibDaoImpl implements HibernateDao {
         EntityManager entityManager;
         entityManager = jpautil.getEntityManager();
         try {
-            String query = "SELECT c FROM CustomersEntity c LEFT JOIN FETCH c.ordersById";
-            List<CustomersEntity> customersList = entityManager.createQuery(query, CustomersEntity.class).getResultList();
+
+            List<CustomersEntity> customersList = entityManager.createNamedQuery("CustomersEntity.getAll", CustomersEntity.class).getResultList();
 
             result = Either.right(customersList);
 

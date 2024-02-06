@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedQuery(name = "CustomersEntity.getAll", query = "SELECT c FROM CustomersEntity c LEFT JOIN FETCH c.ordersById")
 @Table(name = "customers", schema = "pabloserrano_restaurant")
 public class CustomersEntity {
     @Id
