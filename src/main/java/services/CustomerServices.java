@@ -19,8 +19,4 @@ public interface CustomerServices {
     Either<CustomerError, Integer> delete(Customer customer, boolean deleteOrders);
 
 
-
-
-
-    String getNameById(int id);
 }

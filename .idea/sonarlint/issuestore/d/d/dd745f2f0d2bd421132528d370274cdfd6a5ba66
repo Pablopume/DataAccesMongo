@@ -1,11 +1,0 @@
-
-O
-java:S1128"-Remove this unused import 'common.Constants'.(―Λ‚ωÿÿÿÿ8•ίεϋΧ1
-J
-java:S1128	"(Remove this unused import 'dao.JPAUtil'.(¥οÿÿÿÿÿ8•ίεϋΧ1
-T
-java:S1128"2Remove this unused import 'jakarta.inject.Inject'.(‘ψ”ώÿÿÿÿ8–ίεϋΧ1
-`
-java:S1128">Remove this unused import 'jakarta.persistence.EntityManager'.(·οιϊÿÿÿÿ8–ίεϋΧ1
-c
-java:S1128"ARemove this unused import 'model.modelHibernate.MenuItemsEntity'.(²όΙΪϋÿÿÿÿ8–ίεϋΧ1

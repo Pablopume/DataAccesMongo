@@ -97,9 +97,15 @@ public class ListOrderController extends BaseScreenController {
         );
         customersTable.setOnMouseClicked(event -> {
             Order selectedOrder = customersTable.getSelectionModel().getSelectedItem();
-
-           // price.setText(String.valueOf(listOrderViewModel.getOrderItemService().getTotalPrice(null)));
+double total=0;
+            for (OrderItem orderItem : selectedOrder.getOrderItemList()) {
+                MenuItem menuItem = listOrderViewModel.getMenuItemService().get(orderItem.getMenuItemId()).get();
+                total+=menuItem.getPrice()*orderItem.getQuantity();
+            }
+            price.setText(String.valueOf(total));
+          price.setText(String.valueOf(total));
            ordersTable.getItems().setAll(selectedOrder.getOrderItemList());
+
 
             priceT.setCellValueFactory(cellData -> {
                 OrderItem orderItem = cellData.getValue();

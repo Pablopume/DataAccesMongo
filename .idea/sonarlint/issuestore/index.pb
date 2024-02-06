@@ -23,8 +23,6 @@ e
 5src/main/java/services/impl/CustomerServicesImpl.java,c\5\c5d4566d259007b072b9ab192dcf6519e25c9d6b
 S
 #src/main/java/dao/HibernateDao.java,1\2\129346080655786d7c90784311b8c1fbb96d7e9f
-`
-0src/main/java/dao/imp/CustomerHibernateImpl.java,c\b\cbb3e61c5780b19673450dad961f898a7c88bb3c
 S
 #src/main/java/ui/main/DIJavafx.java,5\3\535169814ef8dd70f8f23c95a2032d8268f48d6d
 ]
@@ -35,8 +33,6 @@ p
 @src/main/java/ui/screens/orders/addorder/AddOrderController.java,3\4\34b17cded00af05f0baefda15998a0e53939e65d
 [
 +src/main/java/model/modelo/Credentials.java,5\7\571494166b0cdf79a2406f2b41347f9527884015
-h
-8src/main/java/model/converters/CredentialsConverter.java,b\b\bbd07384883063067bdab1d25a1aeb5c9f4a6405
 e
 5src/main/java/model/converters/CustomerConverter.java,7\c\7c0b35bb504f23bb7a0d1977def06d308d20d5ad
 w
@@ -49,10 +45,6 @@ U
 %src/main/java/dao/imp/HibDaoImpl.java,0\f\0f5413cd6a674557eb075c0bf899dce3773a0b3b
 s
 Csrc/main/java/ui/screens/orders/listorders/ListOrderController.java,3\a\3a7d8d6bd3d3f75e20ee2fc5580dbb4e568c8728
-]
--src/main/java/dao/imp/LoginHibernateImpl.java,8\6\862dfa2a6a62fd655b6c267ea879063ae1c5b52e
-`
-0src/main/java/dao/imp/MenuItemHibernateImpl.java,d\d\dd745f2f0d2bd421132528d370274cdfd6a5ba66
 U
 %src/main/java/model/modelo/Order.java,4\2\4282e93ce237520aa86a0b181551c4d07bc41a3f
 b
@@ -67,8 +59,6 @@ b
 2src/main/java/services/impl/OrderServicesImpl.java,4\3\43d48d5a3fd505f270406151f289f7a9c849c58a
 k
 ;src/main/java/ui/screens/principal/PrincipalController.java,0\a\0a2a894bb55359e43284a787d07f1d373d6ee3e6
-]
--src/main/java/dao/imp/OrderHibernateImpl.java,5\5\5504df870ffc0212d59816c823631ad853d3af0c
 X
 (src/main/java/model/modelo/Customer.java,7\0\70c537c627896c2fcdb1e01187c49fd5b802a869
 X
@@ -85,3 +75,27 @@ Bsrc/main/java/ui/screens/orders/listorders/ListOrderViewModel.java,3\7\375a28f
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 N
 src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
+R
+"src/main/java/dao/CustomerDAO.java,d\9\d91dd66ea1abdc393a1c1ee1e684bded32bd9b7b
+O
+src/main/java/dao/LoginDAO.java,2\4\24af30ca35a083bb0f798e33d327f6f8e971a597
+R
+"src/main/java/dao/MenuItemDAO.java,d\c\dc6423bd033810640d8364830495b469070eb5bc
+g
+7src/main/java/model/modelHibernate/MenuItemsEntity.java,d\f\dfb66adcb5c881bdb474a44e4ff69f32b9b7d986
+h
+8src/main/java/model/modelHibernate/OrderItemsEntity.java,4\f\4fb75e852290cb77b5b20849789c5b2f3fd1a0d2
+^
+.src/main/java/configuration/Configuration.java,6\9\696d9ca1f47656fd0d3b84c90b0f3d75195272d6
+S
+#src/main/java/common/Constants.java,6\e\6ebd50c2038f1fef9135e3562ebde17286486774
+\
+,src/main/java/dao/imp/CustomerMongoImpl.java,0\e\0e3e86dedf5b2e814ce6b0a8fdd603d99b853eaf
+Y
+)src/main/java/dao/imp/LoginMongoImpl.java,8\f\8fceb7801a75c6a4ced709e1ddeea41a13178531
+\
+,src/main/java/dao/imp/MenuItemMongoImpl.java,2\4\2478bce4090138cbc519456c2422de1701efd6c6
+Y
+)src/main/java/dao/imp/OrderMongoImpl.java,f\e\fe74c946b07267609d182df1d3ba16cc9ac965a8
+T
+$src/main/java/common/SqlQueries.java,c\f\cf5428698a010686c1bb942a5c82a1a9666f1924
