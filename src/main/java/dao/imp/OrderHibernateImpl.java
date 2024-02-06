@@ -7,6 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import common.Constants;
@@ -20,6 +21,7 @@ import model.LocalDateAdapter;
 import model.LocalDateTimeAdapter;
 import model.ObjectIdAdapter;
 import model.converters.OrderConverter;
+import model.converters.OrderItemConverter;
 import model.modelo.Order;
 import model.errors.OrderError;
 import org.bson.Document;
@@ -38,15 +40,12 @@ import java.util.stream.Collectors;
 public class OrderHibernateImpl implements OrdersDAO {
     private final OrderConverter orderConverter;
 
-    private final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-            .registerTypeAdapter(ObjectId.class, new ObjectIdAdapter())
-            .create();
+
 
     @Inject
-    public OrderHibernateImpl(OrderConverter orderConverter, JPAUtil jpautil) {
+    public OrderHibernateImpl(OrderConverter orderConverter) {
         this.orderConverter = orderConverter;
+
     }
 
     @Override
@@ -120,7 +119,7 @@ public class OrderHibernateImpl implements OrdersDAO {
             Bson filter = Filters.elemMatch("orders", Filters.regex("date", formattedDate));
 
             Document customerDocument = customers.find(filter).first();
-            if(customerDocument != null) {
+            if (customerDocument != null) {
                 List<Document> ordersDocuments = (List<Document>) customerDocument.get("orders");
                 if (ordersDocuments != null) {
                     List<Document> newOrdersDocuments = ordersDocuments.stream()
@@ -151,21 +150,52 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     @Override
     public Either<OrderError, Integer> update(Order order) {
-       Either<OrderError, Integer> result;
-      try(MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
-          MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
-          MongoCollection<Document> customers = db.getCollection("customers");
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-          String formattedDate = order.getDate().format(formatter);
-          Bson filter = Filters.elemMatch("orders", Filters.regex("date", formattedDate));
-<
-      } catch (Exception ex) {
-          log.error(ex.getMessage());
-          result = Either.left(new OrderError("Error while updating order"));
-      }
+        Either<OrderError, Integer> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customers = db.getCollection("customers");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = order.getDate().format(formatter);
 
+            Bson filter = Filters.elemMatch("orders", Filters.regex("date", formattedDate));
+            Document customerDocument = customers.find(filter).first();
 
+            if (customerDocument != null) {
+                List<Document> ordersList = (List<Document>) customerDocument.get("orders");
+                for (Document doc : ordersList) {
+                    if (doc.getString("date").equals(formattedDate)) {
+                        // Actualizar los campos del pedido
+                        doc.put("table_id", order.getTable_id());
+                        doc.put("date", formattedDate);
+                        List<Document> orderItemListDocuments = order.getOrderItemList().stream()
+                                .map(orderItem -> new Document("quantity", orderItem.getQuantity())
+                                        .append("menuItemId", orderItem.getMenuItemId()))
+                                .toList();
+                        doc.put("orderItemList", orderItemListDocuments);
+
+                        // Actualizar el documento del cliente en la colección
+                        Bson updateFilter = Filters.eq("_id", customerDocument.getObjectId("_id"));
+                        Bson updateOperation = Updates.set("orders", ordersList);
+                        customers.updateOne(updateFilter, updateOperation);
+
+                        result = Either.right(1);  // Suponiendo que 1 indica éxito
+                        return result;
+                    }
+                }
+                result = Either.left(new OrderError("Pedido no encontrado"));
+            } else {
+                result = Either.left(new OrderError("Cliente no encontrado"));
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(new OrderError("Error al actualizar el pedido"));
+        }
+        return result;
     }
+
+
+
+
 
 
     @Override
@@ -174,8 +204,6 @@ public class OrderHibernateImpl implements OrdersDAO {
         try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
-
-
             Bson filter = Filters.eq("_id", id);
 
 
