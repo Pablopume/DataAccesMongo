@@ -24,12 +24,12 @@ import java.util.List;
 @Named("OrderXMLImpl")
 public class OrderXMLImpl implements OrdersDAO {
     @Override
-    public Either<OrderError, List<Order>> getAll() {
+    public Either<OrderError, List<Order>> get() {
         return null;
     }
 
     @Override
-    public Either<OrderError, List<Order>> getAll(ObjectId id) {
+    public Either<OrderError, List<Order>> get(ObjectId id) {
         return null;
     }
 

@@ -10,10 +10,7 @@ import org.bson.types.ObjectId;
 import services.OrderServices;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OrderServicesImpl implements OrderServices {
     private final OrdersDAO ordersDAO;
@@ -24,7 +21,7 @@ public class OrderServicesImpl implements OrderServices {
     }
 
     public Either<OrderError, List<Order>> getAll() {
-        return ordersDAO.getAll();
+        return ordersDAO.get();
     }
 
     @Override
@@ -38,7 +35,7 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public Either<OrderError, List<Order>> filteredListDate(LocalDate date) {
-        Either<OrderError, List<Order>> result = ordersDAO.getAll();
+        Either<OrderError, List<Order>> result = ordersDAO.get();
         if (result.isLeft()) {
             return Either.left(result.getLeft());
         } else {
@@ -52,7 +49,7 @@ public class OrderServicesImpl implements OrderServices {
 
     @Override
     public List<Order> getOrdersByCustomerId(ObjectId id) {
-        return ordersDAO.getAll(id).get();
+        return ordersDAO.get(id).get();
     }
 
 

@@ -1,18 +1,12 @@
 
 v
-java:S1104#"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8…ôí¢Ö1
+java:S1104$"TMake menuItem a static final constant or non-public and provide accessors if needed.(äë¼Úøÿÿÿÿ8Ë¡˜Ø×1
 w
-java:S1104$"ZMake ordersXMLTable a static final constant or non-public and provide accessors if needed.(àş´8…ôí¢Ö1
+java:S1104%"ZMake ordersXMLTable a static final constant or non-public and provide accessors if needed.(àş´8Ë¡˜Ø×1
 p
-java:S1104%"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38…ôí¢Ö1
+java:S1104&"TMake quantity a static final constant or non-public and provide accessors if needed.(ë˜³38Ë¡˜Ø×1
 r
-java:S1104&"UMake menuItems a static final constant or non-public and provide accessors if needed.(ƒ´ãÄ8…ôí¢Ö1
+java:S1104'"UMake menuItems a static final constant or non-public and provide accessors if needed.(ƒ´ãÄ8Ë¡˜Ø×1
 v
-java:S1104'"YMake quantityItems a static final constant or non-public and provide accessors if needed.(÷öäí8…ôí¢Ö1
-o	java:S116""SRename this field "table_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïˆã8ºôí¢Ö1
-]	java:S1256"<This block of commented-out lines of code should be removed.(ÔâÌùÿÿÿÿ8¶Áä³Ö1
-X	java:S125C"<This block of commented-out lines of code should be removed.(ìœô8ê„å³Ö1
-O
-java:S1128"-Remove this unused import 'common.Constants'.(¯ŒË‚ùÿÿÿÿ8¸Áä³Ö1
-V
-java:S1128"4Remove this unused import 'org.bson.types.ObjectId'.(Ü¡‰çıÿÿÿÿ8¸Áä³Ö1
+java:S1104("YMake quantityItems a static final constant or non-public and provide accessors if needed.(÷öäí8Ë¡˜Ø×1
+o	java:S116#"SRename this field "table_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ïˆã8â¡˜Ø×1

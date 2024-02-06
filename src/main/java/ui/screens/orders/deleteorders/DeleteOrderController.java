@@ -76,10 +76,9 @@ public class DeleteOrderController extends BaseScreenController {
         }
     }
 
-    public void deleteOrder(ActionEvent actionEvent) {
+    public void deleteOrder() {
         SelectionModel<Order> selectionModel = ordersTable.getSelectionModel();
         Order selectedOrder = selectionModel.getSelectedItem();
-
 
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirm delete");

@@ -15,8 +15,6 @@ import dao.OrdersDAO;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import lombok.extern.log4j.Log4j2;
 import model.LocalDateAdapter;
 import model.LocalDateTimeAdapter;
@@ -24,18 +22,15 @@ import model.ObjectIdAdapter;
 import model.converters.OrderConverter;
 import model.modelo.Order;
 import model.errors.OrderError;
-import model.modelHibernate.OrdersEntity;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -52,13 +47,11 @@ public class OrderHibernateImpl implements OrdersDAO {
     @Inject
     public OrderHibernateImpl(OrderConverter orderConverter, JPAUtil jpautil) {
         this.orderConverter = orderConverter;
-
-
     }
 
     @Override
     //Con mongo
-    public Either<OrderError, List<Order>> getAll() {
+    public Either<OrderError, List<Order>> get() {
         Either<OrderError, List<Order>> result;
 
         //METODO CON MONGO
@@ -89,9 +82,9 @@ public class OrderHibernateImpl implements OrdersDAO {
 
 
     @Override
-    public Either<OrderError, List<Order>> getAll(ObjectId id) {
+    public Either<OrderError, List<Order>> get(ObjectId id) {
         Either<OrderError, List<Order>> result;
-        try(MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
             Bson filter = Filters.eq("_id", id);
@@ -118,7 +111,27 @@ public class OrderHibernateImpl implements OrdersDAO {
 
     public Either<OrderError, Integer> delete(Order order) {
         Either<OrderError, Integer> result;
-        return null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime date = order.getDate();
+        String formattedDate = date.format(formatter);
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customers = db.getCollection("customers");
+
+            Bson filter = Filters.eq("date", formattedDate);
+            Bson update = Updates.pull("orders", Filters.eq("date", formattedDate));
+            UpdateResult updateResult = customers.updateOne(filter, update);
+            if (updateResult.getModifiedCount() > 0) {
+                result = Either.right(1);
+            } else {
+                result = Either.left(new OrderError("Error while deleting order"));
+            }
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result = Either.left(new OrderError("Error while deleting order"));
+
+        }
+        return result;
     }
 
 
@@ -137,22 +150,25 @@ public class OrderHibernateImpl implements OrdersDAO {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
 
-            // Crear un filtro para encontrar al cliente por su ObjectId
+
             Bson filter = Filters.eq("_id", id);
 
-            // Crear un documento con la nueva orden
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = order.getDate().format(formatter);
             Document newOrderDocument = new Document()
-                    .append("date", order.getDate())
-                    .append("table_id", order.getTable_id())
-                    .append("orderItemList", order.getOrderItemList().stream().map(gson::toJson).toList());
+                    .append("date", formattedDate)
+                    .append("table_id", order.getTable_id());
 
-            // Actualizar el documento del cliente agregando la nueva orden al array 'orders'
+            List<Document> orderItemListDocuments = order.getOrderItemList().stream()
+                    .map(orderItem -> new Document("quantity", orderItem.getQuantity())
+                            .append("menuItemId", orderItem.getMenuItemId()))
+                    .toList();
+
+            newOrderDocument.append("orderItemList", orderItemListDocuments);
             Bson update = Updates.push("orders", newOrderDocument);
-
-            // Ejecutar la actualización
             UpdateResult updateResult = customers.updateOne(filter, update);
 
-            // Verificar si la actualización fue exitosa
             if (updateResult.getModifiedCount() > 0) {
                 result = Either.right(order);
             } else {

@@ -8,8 +8,8 @@ import org.bson.types.ObjectId;
 import java.util.List;
 
 public interface OrdersDAO {
-    Either<OrderError, List<Order>> getAll();
-    Either<OrderError, List<Order>> getAll(ObjectId id);
+    Either<OrderError, List<Order>> get();
+    Either<OrderError, List<Order>> get(ObjectId id);
     Either<OrderError, Integer> delete(Order order);
     Either<OrderError, Order> add(Order order,ObjectId id);
     Either<OrderError, Integer> update(Order c);

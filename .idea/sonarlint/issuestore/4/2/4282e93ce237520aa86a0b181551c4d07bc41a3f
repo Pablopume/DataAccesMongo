@@ -1,18 +1,15 @@
 
-m	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÏ·º8çÇÍ´Ö1
-r	java:S117""QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æ«ıÿÿÿÿ8æÇÍ´Ö1
-r	java:S117""QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(æ«ıÿÿÿÿ8çÇÍ´Ö1
-m	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìú‹Ü8çÇÍ´Ö1
-m	java:S117)"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ìú‹Ü8çÇÍ´Ö1
-r	java:S117/"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾š½Çşÿÿÿÿ8çÇÍ´Ö1
-r	java:S117/"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾š½Çşÿÿÿÿ8˜Ú´Ö1
-w	java:S116"VRename this field "customer_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßåÚ†ıÿÿÿÿ8éÇÍ´Ö1
-t	java:S116"SRename this field "table_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸–é·şÿÿÿÿ8éÇÍ´Ö1
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¬òŞÍıÿÿÿÿ8ÿÅÔ×1
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾š½Çşÿÿÿÿ8ÿÅÔ×1
+r	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¾š½Çşÿÿÿÿ8ÿÅÔ×1
+t	java:S116"SRename this field "table_id" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¸–é·şÿÿÿÿ8„ÆÔ×1
+\
+java:S1172":Remove these unused method parameters "id", "customer_id".(¾š½Çşÿÿÿÿ8ë´ÎÔ×1
 `
-java:S1128">Remove this unused import 'model.modelHibernate.OrdersEntity'.(ÔÈìÊûÿÿÿÿ8ëÇÍ´Ö1
+java:S1128">Remove this unused import 'model.modelHibernate.OrdersEntity'.(ÔÈìÊûÿÿÿÿ8×ÖĞÔ×1
 j
-java:S1128"HRemove this unused import 'model.modelHibernate.RestaurantTablesEntity'.(Ş“ğ®ûÿÿÿÿ8ëÇÍ´Ö1
+java:S1128"HRemove this unused import 'model.modelHibernate.RestaurantTablesEntity'.(Ş“ğ®ûÿÿÿÿ8ØÖĞÔ×1
 K
-java:S1128"/Remove this unused import 'java.sql.Timestamp'.(èò½+8ëÇÍ´Ö1
+java:S1128"/Remove this unused import 'java.sql.Timestamp'.(èò½+8ØÖĞÔ×1
 M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ìÇÍ´Ö1
+java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ØÖĞÔ×1

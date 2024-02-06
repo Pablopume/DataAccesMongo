@@ -1,3 +1,11 @@
 
-W
-java:S1141L"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8½“½³Ö1
+t
+java:S1192B"XDefine a constant instead of duplicating this literal "PabloSerrano_Restaurant" 3 times.(Ş‡ßS8€ôƒØ×1
+†
+java:S1192A"iDefine a constant instead of duplicating this literal "mongodb://informatica.iesquevedo.es:2323" 3 times.(‡°¬ú8€ôƒØ×1
+d
+java:S1192G"GDefine a constant instead of duplicating this literal "orders" 3 times.(º‚‚à8ôƒØ×1
+l
+java:S1192C"JDefine a constant instead of duplicating this literal "customers" 3 times.(¬µ„éÿÿÿÿÿ8ôƒØ×1
+M
+java:S1481x"+Remove this unused "result" local variable.(èô°›ùÿÿÿÿ8ôƒØ×1
