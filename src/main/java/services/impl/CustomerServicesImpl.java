@@ -18,12 +18,12 @@ import java.util.List;
 @Singleton
 public class CustomerServicesImpl implements CustomerServices {
     private final CustomerDAO customerDAO;
-    private final OrdersDAO ordersDAO;
+
 
     @Inject
-    public CustomerServicesImpl(CustomerDAO customerDAO, @Named("OrderXMLImpl") OrdersDAO ordersDAO) {
+    public CustomerServicesImpl(CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
-        this.ordersDAO = ordersDAO;
+
     }
 
     @Override

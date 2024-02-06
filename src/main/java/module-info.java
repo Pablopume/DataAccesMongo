@@ -24,7 +24,6 @@ module javafx {
     requires spring.tx;
     requires jakarta.persistence;
     requires mongo.java.driver;
-    opens model.xml to jakarta.xml.bind;
     exports ui.screens.orders.deleteorders;
     exports services.impl;
     exports dao.imp;
@@ -63,7 +62,6 @@ module javafx {
     exports model.errors;
     exports services;
     opens dao.imp;
-    exports model.xml;
     exports model.modelo;
     opens model.modelo;
 }

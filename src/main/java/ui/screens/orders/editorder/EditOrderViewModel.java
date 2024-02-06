@@ -8,7 +8,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import lombok.Data;
 import model.modelo.Order;
 import services.MenuItemService;
-import services.OrderItemService;
 import services.OrderServices;
 
 import java.util.ArrayList;
@@ -17,13 +16,12 @@ import java.util.List;
 public class EditOrderViewModel {
     private final MenuItemService menuItemService;
     private final OrderServices services;
-    private final OrderItemService orderItemService;
+
     private final ObjectProperty<EditOrderState> state;
 
     @Inject
-    public EditOrderViewModel(MenuItemService menuItemService, OrderServices services, OrderItemService orderItemService) {
+    public EditOrderViewModel(MenuItemService menuItemService, OrderServices services) {
         this.menuItemService = menuItemService;
-        this.orderItemService = orderItemService;
 
         this.state = new SimpleObjectProperty<>(new EditOrderState(new ArrayList<>(), null));
         this.services = services;

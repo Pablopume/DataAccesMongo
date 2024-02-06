@@ -25,6 +25,7 @@ import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.modelo.MenuItem;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -93,29 +94,23 @@ public class HibDaoImpl implements HibernateDao {
             Gson gson = new GsonBuilder()
                     .registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                     .create();
-            List<Document> documents = new ArrayList<>();
             List<Document> documents1 = new ArrayList<>();
             List<Document> documents2 = new ArrayList<>();
             for (CustomersEntity c : customersEntities) {
 
                 Customer customer = c.toCustomer();
-                Customer s = Customer.builder()
-                        .first_name(customer.getFirst_name())
-                        .last_name(c.getLastName())
-                        .email(c.getEmail())
-                        .phone(c.getPhone())
-                        .date_of_birth(customer.getDate_of_birth()).orders(customer.getOrders())
-                        .build();
-                Document document = Document.parse(gson.toJson(s));
-                documents.add(document);
-                CredentialsEntity credentials1 = c.getCredentialsById();
-                Credentials credentials =credentials1.toCredentials();
-                Credentials.builder()
-                        .user(credentials.getUser())
-                        .password(credentials.getPassword())
-                        .build();
 
+                Document document = Document.parse(gson.toJson(customer));
+
+                // Insert the customer
+                customersCollection.insertOne(document);
+                // Get the generated ID
+                ObjectId customerId = (ObjectId) document.get("_id");
+                CredentialsEntity credentials1 = c.getCredentialsById();
+                Credentials credentials = credentials1.toCredentials();
                 Document document1 = Document.parse(gson.toJson(credentials));
+                document1.remove("_id");
+                document1.append("_id", customerId);
                 documents1.add(document1);
             }
             for (MenuItemsEntity m : menuItemsEntities) {
@@ -124,7 +119,6 @@ public class HibDaoImpl implements HibernateDao {
                 documents2.add(document2);
             }
             result = Either.right(true);
-            customersCollection.insertMany(documents);
             credentialsCollection.insertMany(documents1);
             menuItemsCollection.insertMany(documents2);
         } catch (Exception e) {
@@ -134,5 +128,9 @@ public class HibDaoImpl implements HibernateDao {
         }
         return result;
     }
+
+
+
+
 
 }
