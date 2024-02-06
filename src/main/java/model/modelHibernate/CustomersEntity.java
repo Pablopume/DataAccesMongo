@@ -60,9 +60,6 @@ public class CustomersEntity {
         return new Customer( firstName, lastName, email, phone, dateOfBirth.toLocalDate(),  ordersById.stream().map(OrdersEntity::toOrder).collect(Collectors.toList()));
     }
 
-
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

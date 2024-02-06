@@ -1,9 +1,13 @@
 
 t
-java:S1192;"XDefine a constant instead of duplicating this literal "PabloSerrano_Restaurant" 4 times.(Þ‡ßS8‹èÜÝ×1
+java:S1192:"XDefine a constant instead of duplicating this literal "PabloSerrano_Restaurant" 5 times.(Þ‡ßS8•Ï©û×1
 †
-java:S1192:"iDefine a constant instead of duplicating this literal "mongodb://informatica.iesquevedo.es:2323" 4 times.(‡°¬ú8‹èÜÝ×1
+java:S11929"iDefine a constant instead of duplicating this literal "mongodb://informatica.iesquevedo.es:2323" 5 times.(‡°¬ú8•Ï©û×1
+y
+java:S1192…"[Define a constant instead of duplicating this literal "Error while deleting order" 4 times.(½Ùÿ¦8•Ï©û×1
+p
+java:S1192q"TDefine a constant instead of duplicating this literal "yyyy-MM-dd HH:mm:ss" 3 times.(óø‘u8•Ï©û×1
 d
-java:S1192@"GDefine a constant instead of duplicating this literal "orders" 4 times.(º‚‚à8‹èÜÝ×1
+java:S1192?"GDefine a constant instead of duplicating this literal "orders" 9 times.(º‚‚à8–Ï©û×1
 l
-java:S1192<"JDefine a constant instead of duplicating this literal "customers" 4 times.(¬µ„éÿÿÿÿÿ8ŒèÜÝ×1
+java:S1192;"JDefine a constant instead of duplicating this literal "customers" 5 times.(¬µ„éÿÿÿÿÿ8–Ï©û×1

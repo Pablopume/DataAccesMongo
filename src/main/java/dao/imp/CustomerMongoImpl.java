@@ -6,37 +6,26 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import common.Constants;
 import dao.CustomerDAO;
-import dao.JPAUtil;
 import jakarta.inject.Inject;
-import jakarta.persistence.*;
 import lombok.extern.log4j.Log4j2;
 import model.LocalDateAdapter;
 import model.LocalDateTimeAdapter;
 import model.ObjectIdAdapter;
 import model.converters.CustomerConverter;
-import model.modelo.Credentials;
 import model.modelo.Customer;
 import model.errors.CustomerError;
-import model.modelHibernate.CustomersEntity;
-import model.modelHibernate.OrderItemsEntity;
-import model.modelHibernate.OrdersEntity;
 import io.vavr.control.Either;
-import model.modelo.Order;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
-public class CustomerHibernateImpl implements CustomerDAO {
+public class CustomerMongoImpl implements CustomerDAO {
     private final CustomerConverter customerConverter;
 
     private final Gson gson = new GsonBuilder()
@@ -44,47 +33,37 @@ public class CustomerHibernateImpl implements CustomerDAO {
             .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
             .registerTypeAdapter(ObjectId.class, new ObjectIdAdapter())
             .create();
+
     @Inject
-    public CustomerHibernateImpl(CustomerConverter customerConverter) {
+    public CustomerMongoImpl(CustomerConverter customerConverter) {
         this.customerConverter = customerConverter;
 
     }
 
-//    @Override
-   public Either<CustomerError, List<Customer>> add(Customer c) {
+    //    @Override
+    public Either<CustomerError, List<Customer>> add(Customer c) {
 
 
-           Either<CustomerError, List<Customer>> result;
-           try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
-               MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
-               MongoCollection<Document> customers = db.getCollection("customers");
-               MongoCollection<Document> credentials = db.getCollection("credentials");
+        Either<CustomerError, List<Customer>> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
+            MongoCollection<Document> customers = db.getCollection("customers");
+            MongoCollection<Document> credentials = db.getCollection("credentials");
+            Document customerDocument = Document.parse(gson.toJson(c));
+            customerDocument.remove("credentials");
+            customers.insertOne(customerDocument);
+            ObjectId customerId = (ObjectId) customerDocument.get("_id");
+            c.getCredentials().set_id(customerId);
+            Document credentialDocument = Document.parse(gson.toJson(c.getCredentials()));
+            credentials.insertOne(credentialDocument);
 
-               // Convert Customer to Document using Gson
-               Document customerDocument = Document.parse(gson.toJson(c));
-                customerDocument.remove("credentials");
-               // Insert the document into the collection
-               customers.insertOne(customerDocument);
-
-               ObjectId customerId = (ObjectId) customerDocument.get("_id");
-
-               // Establecer la id generada en la entidad Credential
-               c.getCredentials().set_id(customerId);
-
-               // Convert Credential to Document using Gson
-               Document credentialDocument = Document.parse(gson.toJson(c.getCredentials()));
-
-               // Insertar el documento del Credential en la colección
-               credentials.insertOne(credentialDocument);
-
-               result = Either.right(getAll().get());
-           } catch (Exception e) {
-               log.error(e.getMessage());
-               result = Either.left(new CustomerError(1,"Error while inserting customer"));
-           }
-           return result;
-       }
-
+            result = Either.right(getAll().get());
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            result = Either.left(new CustomerError(1, "Error while inserting customer"));
+        }
+        return result;
+    }
 
 
     @Override
@@ -152,9 +131,6 @@ public class CustomerHibernateImpl implements CustomerDAO {
             return Either.left(new CustomerError(0, "Error while retrieving customers"));
         }
     }
-
-
-
 
 
 }

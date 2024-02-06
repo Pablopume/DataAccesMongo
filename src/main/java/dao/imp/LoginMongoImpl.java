@@ -2,21 +2,16 @@ package dao.imp;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mongodb.Mongo;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import dao.JPAUtil;
 import dao.LoginDAO;
 import io.vavr.control.Either;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import model.LocalDateAdapter;
 import model.LocalDateTimeAdapter;
 import model.ObjectIdAdapter;
 import model.modelo.Credentials;
-import model.modelHibernate.CredentialsEntity;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -26,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LoginHibernateImpl implements LoginDAO {
+public class LoginMongoImpl implements LoginDAO {
 
 
 

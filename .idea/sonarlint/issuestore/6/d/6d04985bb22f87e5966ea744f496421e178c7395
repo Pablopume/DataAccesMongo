@@ -1,0 +1,10 @@
+
+{	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(•íÃÿÿÿÿÿÿ8âˆÃù×1
+t
+java:S6204<"RReplace this usage of 'Stream.collect(Collectors.toList())' with 'Stream.toList()'(›¬·üÿÿÿÿ8ýˆÃù×1
+L
+java:S1128"/Remove this unused import 'model.modelo.Order'.(Òª—ì8‰Ãù×1
+V
+java:S1128	"4Remove this unused import 'org.bson.types.ObjectId'.(Ü¡‰çýÿÿÿÿ8‰Ãù×1
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8‰Ãù×1

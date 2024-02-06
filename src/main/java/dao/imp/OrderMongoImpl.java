@@ -1,49 +1,39 @@
 package dao.imp;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import common.Constants;
-import dao.JPAUtil;
 import dao.OrdersDAO;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import lombok.extern.log4j.Log4j2;
-import model.LocalDateAdapter;
-import model.LocalDateTimeAdapter;
-import model.ObjectIdAdapter;
 import model.converters.OrderConverter;
-import model.converters.OrderItemConverter;
 import model.modelo.Order;
 import model.errors.OrderError;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Named("OrderDB")
-public class OrderHibernateImpl implements OrdersDAO {
+public class OrderMongoImpl implements OrdersDAO {
     private final OrderConverter orderConverter;
 
 
 
     @Inject
-    public OrderHibernateImpl(OrderConverter orderConverter) {
+    public OrderMongoImpl(OrderConverter orderConverter) {
         this.orderConverter = orderConverter;
 
     }
@@ -164,7 +154,6 @@ public class OrderHibernateImpl implements OrdersDAO {
                 List<Document> ordersList = (List<Document>) customerDocument.get("orders");
                 for (Document doc : ordersList) {
                     if (doc.getString("date").equals(formattedDate)) {
-                        // Actualizar los campos del pedido
                         doc.put("table_id", order.getTable_id());
                         doc.put("date", formattedDate);
                         List<Document> orderItemListDocuments = order.getOrderItemList().stream()
@@ -173,12 +162,11 @@ public class OrderHibernateImpl implements OrdersDAO {
                                 .toList();
                         doc.put("orderItemList", orderItemListDocuments);
 
-                        // Actualizar el documento del cliente en la colección
                         Bson updateFilter = Filters.eq("_id", customerDocument.getObjectId("_id"));
                         Bson updateOperation = Updates.set("orders", ordersList);
                         customers.updateOne(updateFilter, updateOperation);
 
-                        result = Either.right(1);  // Suponiendo que 1 indica éxito
+                        result = Either.right(1);
                         return result;
                     }
                 }

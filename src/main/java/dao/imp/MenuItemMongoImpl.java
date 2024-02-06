@@ -5,18 +5,13 @@ import com.google.gson.GsonBuilder;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoDatabase;
-import common.Constants;
-import dao.JPAUtil;
 import dao.MenuItemDAO;
 import io.vavr.control.Either;
-import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 import model.LocalDateAdapter;
 import model.LocalDateTimeAdapter;
 import model.ObjectIdAdapter;
 import model.modelo.MenuItem;
 import model.errors.OrderError;
-import model.modelHibernate.MenuItemsEntity;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
@@ -24,7 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuItemHibernateImpl implements MenuItemDAO {
+public class MenuItemMongoImpl implements MenuItemDAO {
 
 
     private final Gson gson = new GsonBuilder()
