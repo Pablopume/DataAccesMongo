@@ -99,3 +99,9 @@ Y
 )src/main/java/dao/imp/OrderMongoImpl.java,f\e\fe74c946b07267609d182df1d3ba16cc9ac965a8
 T
 $src/main/java/common/SqlQueries.java,c\f\cf5428698a010686c1bb942a5c82a1a9666f1924
+[
++src/main/java/dao/imp/AggregationsImpl.java,3\7\379f4265972920c5e2d2f8aab5011b12324922de
+V
+&src/main/java/dao/AggregationsDao.java,6\a\6a4da01144e67c8e5b16f4a63b21ea1307352836
+V
+&src/main/java/dao/AggregationsDAO.java,9\d\9dfd964443a3121db7c1174b79dd35809830e3ec
