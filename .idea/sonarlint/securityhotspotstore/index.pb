@@ -105,3 +105,9 @@ V
 &src/main/java/dao/AggregationsDao.java,6\a\6a4da01144e67c8e5b16f4a63b21ea1307352836
 V
 &src/main/java/dao/AggregationsDAO.java,9\d\9dfd964443a3121db7c1174b79dd35809830e3ec
+]
+-src/main/java/model/LocalDateTimeAdapter.java,a\c\acbf54e6bf914a2d9615de55ad8d7a88a8ba1ef3
+Y
+)src/main/java/AggregationsMain/MainA.java,7\b\7b4c8c34eec3a9285ef171025d563598bebc80fa
+e
+5src/main/java/services/impl/AggregationsServices.java,1\5\1556f82de07196223b3d85d3c31ac6648214c8c3

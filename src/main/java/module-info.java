@@ -38,6 +38,7 @@ module javafx {
     exports ui.screens.customers.editcustomers;
     exports ui.screens.orders.listorders;
     exports ui.screens.orders.addorder;
+    exports AggregationsMain;
     exports configuration;
     exports common;
     exports model.converters;
