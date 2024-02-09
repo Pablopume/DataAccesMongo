@@ -111,3 +111,7 @@ Y
 )src/main/java/AggregationsMain/MainA.java,7\b\7b4c8c34eec3a9285ef171025d563598bebc80fa
 e
 5src/main/java/services/impl/AggregationsServices.java,1\5\1556f82de07196223b3d85d3c31ac6648214c8c3
+Y
+)src/main/java/AggregationsMain/MainB.java,1\1\11eb519e1aa7b226c7ced7e5366adbe3097b6388
+Y
+)src/main/java/AggregationsMain/MainC.java,2\f\2fcf6a435f8f3c89afe407b24e5321d51b9b28e8
