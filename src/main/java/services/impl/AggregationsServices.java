@@ -7,6 +7,7 @@ import model.errors.OrderError;
 
 public class AggregationsServices {
     private final AggregationsDAO aggregationsDAO;
+
     @Inject
     public AggregationsServices(AggregationsDAO aggregationsDAO) {
         this.aggregationsDAO = aggregationsDAO;
@@ -62,6 +63,25 @@ public class AggregationsServices {
 
     public Either<OrderError, String> m() {
         return aggregationsDAO.m();
+    }
+
+    public Either<OrderError, String> ex2a() {
+        return aggregationsDAO.ex2a();
+    }
+
+    public Either<OrderError, String> ex2b() {
+        return aggregationsDAO.ex2b();
+    }
+
+    public Either<OrderError, String> ex2c() {
+        return aggregationsDAO.ex2c();
+    }
+
+    public Either<OrderError, String> ex2d() {
+        return aggregationsDAO.ex2d();
+    }
+    public Either<OrderError, String> ex2e() {
+        return aggregationsDAO.ex2e();
     }
 
 }

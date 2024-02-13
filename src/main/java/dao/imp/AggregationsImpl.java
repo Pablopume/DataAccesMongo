@@ -4,10 +4,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Field;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Sorts;
+import com.mongodb.client.model.*;
 import dao.AggregationsDAO;
 import io.vavr.control.Either;
 import model.errors.OrderError;
@@ -21,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.mongodb.client.model.Accumulators.*;
 import static com.mongodb.client.model.Aggregates.*;
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Projections.*;
 import static com.mongodb.client.model.Sorts.descending;
 
@@ -182,7 +179,13 @@ public class AggregationsImpl implements AggregationsDAO {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
             List<Document> document = customers.aggregate(Arrays.asList(
-                    unwind("$orders"), group("$orders.table_id", sum("table", 0)), sort(Sorts.descending("table")), project(exclude("table")), limit(1))).into(new ArrayList<>());
+                    unwind("$orders")
+                    , group("$orders.table_id"
+                            , sum("table", 0))
+                    , sort(Sorts.descending("table"))
+                    , project(exclude("table"))
+                    , limit(1)))
+                    .into(new ArrayList<>());
 
             String json = document.stream().map(Document::toJson).collect(Collectors.joining(","));
             result = Either.right(json);
@@ -202,7 +205,7 @@ public class AggregationsImpl implements AggregationsDAO {
             List<Document> documents = customers.aggregate(Arrays.asList(
                     unwind("$orders"),
                     group(
-                            Filters.and(Filters.eq("_id", "$_id"), Filters.eq("table_id", "$orders.table_id")),
+                            and(Filters.eq("_id", "$_id"), Filters.eq("table_id", "$orders.table_id")),
                             sum("total", 1)
                     ),
                     sort(descending("total")),
@@ -229,11 +232,11 @@ public class AggregationsImpl implements AggregationsDAO {
                     unwind("$orders"),
                     unwind("$orders.orderItemList"),
                     group(
-                            Filters.and(Filters.eq("date", "$orders.date"), Filters.eq("menuItemId", "$orders.orderItemList.menuItemId")),
+                            and(Filters.eq("date", "$orders.date"), Filters.eq("menuItemId", "$orders.orderItemList.menuItemId")),
                             sum("menuItem", "$orders.orderItemList.quantity")
                     ),
                     match(eq("menuItem", 1)),
-                    addFields(new Field<>("menuItem", "$_id.menuItemId"),new Field<>("date", "$_id.date")),
+                    addFields(new Field<>("menuItem", "$_id.menuItemId"), new Field<>("date", "$_id.date")),
                     project(excludeId())
             )).into(new ArrayList<>());
 
@@ -253,16 +256,14 @@ public class AggregationsImpl implements AggregationsDAO {
         try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
             MongoDatabase db = mongo.getDatabase("PabloSerrano_Restaurant");
             MongoCollection<Document> customers = db.getCollection("customers");
-            //Price paid for each order (Use $lookup)
-
 
             List<Document> documents = customers.aggregate(Arrays.asList(
                     unwind("$orders"),
-                    lookup("menuitems", "orders.orderItemList.menuItemId", "id", "menuItems"),
-                    unwind("$menuItems"),
-                    group("$orders._id", sum("total", "$menuItems.price")),
-                    project(fields(excludeId(), include("total"))
-                    )
+                    unwind("$orders.orderItemList"),
+                    lookup("menuitems", "orders.orderItemList.menuItemId", "id", "menuitems"),
+                    unwind("$menuitems"),
+                    addFields(new Field("total", new Document("$multiply", Arrays.asList("$orders.orderItemList.quantity", "$menuitems.price")))),
+                    group("$orders.date", sum("total", "$total"))
             )).into(new ArrayList<>());
 
 
@@ -285,15 +286,14 @@ public class AggregationsImpl implements AggregationsDAO {
 
             List<Document> documents = customers.aggregate(Arrays.asList(
                     unwind("$orders"),
-                    lookup("menuitems", "orders.orderItemList.menuItemId", "id", "menuItems"),
-                    unwind("$menuItems"),
-                    group("$orders.customer_id", sum("total", "$menuItems.price")),
-                    sort(descending("total")),
-                    limit(1),
-                    lookup("customers", "_id", "customer_id", "customer"),
-                    unwind("$customer"),
-                    project(fields(include("first_name"), excludeId())
-                    )
+                    unwind("$orders.orderItemList"),
+                    lookup("menuitems", "orders.orderItemList.menuItemId", "id", "menuitems"),
+                    unwind("$menuitems"),
+                    addFields(new Field("total", new Document("$multiply", Arrays.asList("$orders.orderItemList.quantity", "$menuitems.price")))),
+                    group("$first_name", sum("total", "$total")),
+                    sort(Sorts.descending("first_name","total")),
+                    limit(1)
+
             )).into(new ArrayList<>());
 
             String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
@@ -332,6 +332,120 @@ public class AggregationsImpl implements AggregationsDAO {
     }
 
 
+    public Either<OrderError, String> ex2a() {
+        //name of brawlers with id between 16000017 and 16000030
+        Either<OrderError, String> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("brawl");
+            MongoCollection<Document> collection = db.getCollection("brawlers");
+
+            List<Document> documents = collection.aggregate(List.of(
+                    match(and(gte("id", 16000017), lt("id", 16000030))), project(Projections.fields(Projections.include("name"), Projections.excludeId()))
+
+            )).into(new ArrayList<>());
+
+            String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
+            result = Either.right(json);
+
+        } catch (Exception e) {
+            result = Either.left(new OrderError(e.getMessage()));
+
+        }
+        return result;
+    }
+
+    public Either<OrderError, String> ex2b() {
+        Either<OrderError, String> result;
+        //name of gadgets with id between 23000255 and 23000264
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("brawl");
+            MongoCollection<Document> collection = db.getCollection("brawlers");
+
+            List<Document> documents = collection.aggregate(Arrays.asList(
+                    Aggregates.unwind("$gadgets"),
+                    Aggregates.match(Filters.and(
+                            Filters.gte("gadgets.id", 23000255),
+                            Filters.lte("gadgets.id", 23000264)
+                    )),
+                    Aggregates.project(Projections.fields(
+                            Projections.excludeId(),
+                            Projections.include("gadgets.name")
+                    ))
+            )).into(new ArrayList<>());
+            String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
+            result = Either.right(json);
+
+        } catch (Exception e) {
+            result = Either.left(new OrderError(e.getMessage()));
+
+        }
+        return result;
+    }
+
+    public Either<OrderError, String> ex2c() {
+        //name of brawler with 2 gadgets
+        Either<OrderError, String> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("brawl");
+            MongoCollection<Document> collection = db.getCollection("brawlers");
+            List<Document> documents = collection.aggregate(Arrays.asList(
+                    Aggregates.unwind("$gadgets"),
+                    Aggregates.group("$name", Accumulators.sum("totalGadgets", 1)),
+                    Aggregates.match(Filters.eq("totalGadgets", 2))
+            )).into(new ArrayList<>());
+
+            String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
+            result = Either.right(json);
+
+        } catch (Exception e) {
+            result = Either.left(new OrderError(e.getMessage()));
+        }
+        return result;
+    }
+
+    public Either<OrderError, String> ex2d() {
+        Either<OrderError, String> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("brawl");
+            MongoCollection<Document> collection = db.getCollection("brawlers");
+//name of brawler with star power "SHELL SHOCK"
+            List<Document> documents = collection.aggregate(Arrays.asList(
+                    Aggregates.match(Filters.eq("starPowers.name", "SHELL SHOCK")),
+                    Aggregates.project(Projections.fields(
+                            Projections.excludeId(),
+                            Projections.include("name")
+                    ))
+            )).into(new ArrayList<>());
+
+            String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
+            result = Either.right(json);
+
+        } catch (Exception e) {
+            result = Either.left(new OrderError(e.getMessage()));
+        }
+        return result;
+    }
 
 
+    public Either<OrderError, String> ex2e() {
+        Either<OrderError, String> result;
+        try (MongoClient mongo = MongoClients.create("mongodb://informatica.iesquevedo.es:2323")) {
+            MongoDatabase db = mongo.getDatabase("brawl");
+            MongoCollection<Document> collection = db.getCollection("brawlers");
+            List<Document> documents = collection.aggregate(Arrays.asList(
+                    Aggregates.match(Filters.and(
+                            Filters.eq("starPowers.name", "SLICK BOOTS"),
+                            Filters.eq("gadgets.name", "SPEEDLOADER")
+                    )),
+                    Aggregates.project(Projections.fields(
+                            Projections.excludeId(),
+                            Projections.include("name")
+                    )))).into(new ArrayList<>());
+            String json = documents.stream().map(Document::toJson).collect(Collectors.joining(","));
+            result = Either.right(json);
+        } catch (Exception e) {
+            result = Either.left(new OrderError(e.getMessage()));
+        }
+        return result;
+    }
 }

@@ -17,4 +17,9 @@ public interface AggregationsDAO {
     Either<OrderError,String> k();
     Either<OrderError,String> l();
     Either<OrderError,String> m();
+    Either<OrderError,String> ex2a();
+    Either<OrderError,String> ex2b();
+    Either<OrderError,String> ex2c();
+    Either<OrderError,String> ex2d();
+    Either<OrderError,String> ex2e();
 }
